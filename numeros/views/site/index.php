@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 text-center">
-        <h3>Alunos Matriculados</h3>
+        <h3>Alunos Matriculados - TESTE</h3>
         <hr class="hr-section">
       </div>
     </div>
