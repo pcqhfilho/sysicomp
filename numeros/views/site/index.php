@@ -1,3 +1,9 @@
+<?php 
+use yii\helpers\Html;
+use yii\grid\GridView;
+?>
+
+<!-- Alunos section -->
 <section id="alunos">
   <div class="container">
     <div class="row">
@@ -124,5 +130,31 @@
         <small>Fonte: Sistema PPGI, <?php echo date('d/m/Y'); ?>.</small>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Docentes section -->
+<section class="success" id="docentes">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Docentes</h3>
+            <hr class="hr-section">
+        </div>
+        <?= GridView::widget([
+              'dataProvider' => $professorDataProvider,
+              'columns' => [
+                [
+                  'header' => 'Nome',
+                  'attribute' => 'nome',
+                ],
+                [
+                  'header' => 'Ultima atualização',
+                  'attribute' => 'updated_at',
+                ]
+              ],
+            ]); 
+        ?>
+    </div>    
   </div>
 </section>
