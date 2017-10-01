@@ -92,10 +92,12 @@ class Professor extends \yii\db\ActiveRecord
         $query = Professor::find()
         ->where(['professor' => 1])
         ->andWhere(['not like', 'nome', 'poderoso'])
-        ->andWhere(['not like', 'nome', 'admin']);
+        ->andWhere(['not like', 'nome', 'admin'])
+        ->orderBy('nome');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => false,
         ]);
         return $dataProvider;
     }

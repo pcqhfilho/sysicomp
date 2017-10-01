@@ -144,6 +144,7 @@ use yii\grid\GridView;
         <?php
           echo GridView::widget([
             'dataProvider' => $professorDataProvider,
+            'summary' => "",
             'columns' => [
               [
                 'header' => 'Nome',
@@ -156,6 +157,16 @@ use yii\grid\GridView;
               [
                 'header' => 'Ultima atualização',
                 'attribute' => 'updated_at',
+                
+                // This function changes the date format 'y-m-d' to 'd/m/y' because in the stored data have both those date formats
+                'value' => function ($data){
+                  if($data->updated_at)
+                  if($data->updated_at[2] != '/'){
+                    $date = date_create($data->updated_at);
+                    return date_format($date, 'd/m/Y');
+                  }
+                  return $data->updated_at;
+                }
               ],
               
             ],
