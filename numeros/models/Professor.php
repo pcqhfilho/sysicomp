@@ -80,7 +80,7 @@ class Professor extends \yii\db\ActiveRecord
         ];
     }
 
-    /* Esta funao retorna o dataProvider da query: 
+    /* This function returns a dataProvider from query: 
         SELECT nome, updated_at 
         FROM j17_user 
         WHERE professor = 1
@@ -93,8 +93,6 @@ class Professor extends \yii\db\ActiveRecord
         ->where(['professor' => 1])
         ->andWhere(['not like', 'nome', 'poderoso'])
         ->andWhere(['not like', 'nome', 'admin']);
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

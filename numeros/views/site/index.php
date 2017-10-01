@@ -141,19 +141,25 @@ use yii\grid\GridView;
             <h3>Docentes</h3>
             <hr class="hr-section">
         </div>
-        <?= GridView::widget([
-              'dataProvider' => $professorDataProvider,
-              'columns' => [
-                [
-                  'header' => 'Nome',
-                  'attribute' => 'nome',
-                ],
-                [
-                  'header' => 'Ultima atualização',
-                  'attribute' => 'updated_at',
-                ]
+        <?php
+          echo GridView::widget([
+            'dataProvider' => $professorDataProvider,
+            'columns' => [
+              [
+                'header' => 'Nome',
+                'format' => 'raw',
+                'attribute' => 'nome',
+                'value' => function ($data){
+                  return Html::a(Html::encode($data->nome),'index.php?r=professor');
+                }
               ],
-            ]); 
+              [
+                'header' => 'Ultima atualização',
+                'attribute' => 'updated_at',
+              ],
+              
+            ],
+          ]); 
         ?>
     </div>    
   </div>
