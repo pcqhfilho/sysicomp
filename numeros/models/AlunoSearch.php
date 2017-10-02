@@ -123,13 +123,37 @@ class AlunoSearch extends Aluno
             ->andFilterWhere(['like', 'crgrad', $this->crgrad])
             ->andFilterWhere(['like', 'dataformaturagrad', $this->dataformaturagrad])
             ->andFilterWhere(['like', 'sede', $this->sede]);
-
+            
         return $dataProvider;
     }
 
-    public static function getByStatusAndCourse($status, $curso){
-        return new ActiveDataProvider([
-            'query' => Aluno::find()->where(['status' => $status, 'curso' => $curso])
+    // Função que filtra alunos egressos do ppgi de acordo com o curso passado como parametro
+    public function searchAlunos($params, $curso){
+        
+        $query = Aluno::find()
+        ->where([
+            'curso' => $curso,
+            'status' => '1'
         ]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere(['like', 'nome', $this->nome])
+            ->andFilterWhere(['like', 'anoconclusao' , $this->anoconclusao]);
+        
+
+        return $dataProvider;
     }
 }

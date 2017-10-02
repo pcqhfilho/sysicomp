@@ -503,6 +503,10 @@ footer .footer-below {
     padding: 10px;
 }
 
+.grid-view table thead {
+    background-color: #ECF0EE;
+}
+
 .graduate{
     color: #18bc9c;
 }

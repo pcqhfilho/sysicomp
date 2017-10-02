@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel numeros\models\AlunoSearch */
+/* @var $searchModel numeros\models\GraduacaoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = ' ALUNOS FORMADOS';
@@ -19,13 +19,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['attribute' => 'nome',
+            ['attribute' => 'NOME_PESSOA',
             'headerOptions' => ['style' => 'width:80%'],
             ],
-            ['attribute' => 'anoconclusao',
-                'value' => function ($model) {
-                    return date("Y", strtotime($model->anoconclusao));
-                },
+            ['attribute' => 'DT_EVASAO',
+
+                // Função abaixo de formatação de data está bugando a data
+
+                // 'value' => function ($model) {
+                //     return date("Y", strtotime($model->DT_EVASAO));
+                // },
                 'headerOptions' => ['style' => 'width:20%'],
             ],
         ],
