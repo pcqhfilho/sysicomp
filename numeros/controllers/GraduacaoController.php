@@ -3,16 +3,16 @@
 namespace numeros\controllers;
 
 use Yii;
-use numeros\models\Aluno;
-use numeros\models\AlunoSearch;
+use numeros\models\Graduacao;
+use numeros\models\GraduacaoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AlunoController implements the CRUD actions for Aluno model.
+ * GraduacaoController implements the CRUD actions for Graduacao model.
  */
-class AlunoController extends Controller
+class GraduacaoController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,13 +30,13 @@ class AlunoController extends Controller
     }
 
     /**
-     * Lists all Aluno models.
+     * Lists all Graduacao models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AlunoSearch();
-        $dataProvider = $searchModel->searchMestrado(Yii::$app->request->queryParams);
+        $searchModel = new GraduacaoSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -44,31 +44,43 @@ class AlunoController extends Controller
         ]);
     }
 
-    // Actions referente as views de Mestrado e Doutorado
-    public function actionAlunosMestrado(){
-        return $this->alunosFormados('Mestrado');
+    // Actions referentes as views de pesquisa de cada curso
+    public function actionAlunosPd(){
+        return $this->alunosFormados('Processamento de Dados');
     }
 
-    public function actionAlunosDoutorado()
+    public function actionAlunosCc(){
+        return $this->alunosFormados('Ciência da Computação');
+    }
+
+    public function actionAlunosSi()
     {
-        return $this->alunosFormados('Doutorado');
+        return $this->alunosFormados('Sistemas de Informação');
     }
 
-    // Função que renderiza view para alunos formados no Mestrado ou Doutorado
+    /* Função que renderiza view para alunos formados em Processamento de Dados ou
+    Ciência da Computação ou Sistemas de Informação */
     private function alunosFormados($curso){
-        if($curso == "Mestrado"){
-            $busca_curso = '1';
-            $searchModel = new AlunoSearch();
+        if($curso == "Processamento de Dados"){
+            $busca_curso = 'IE06';
+            $searchModel = new GraduacaoSearch();
             $dataProvider = $searchModel->searchAlunos(Yii::$app->request->queryParams, $busca_curso);        
             
-        }else{
-            $busca_curso = '2';
-            $searchModel = new AlunoSearch();
+        }else if($curso == "Ciência da Computação"){
+            $busca_curso = 'IE08';
+            $searchModel = new GraduacaoSearch();
             $dataProvider = $searchModel->searchAlunos(Yii::$app->request->queryParams, $busca_curso);        
-        }//query que retorna a quantidade de alunos do curso parametro
+                   
+        }else{
+            $busca_curso = 'IE15';
+            $searchModel = new GraduacaoSearch();
+            $dataProvider = $searchModel->searchAlunos(Yii::$app->request->queryParams, $busca_curso);                    
+        }
+
+        //query que retorna a quantidade de alunos do curso parametro
         $qtdEgr = (new \yii\db\Query())
-        ->from('j17_aluno')
-        ->where(['status' => '1', 'curso' => $busca_curso])
+        ->from('j17_aluno_grad')
+        ->where(['FORMA_EVASAO' => 'Formado', 'COD_CURSO' => $busca_curso])
         ->count();
         
         return $this->render('index',[
@@ -80,7 +92,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Displays a single Aluno model.
+     * Displays a single Graduacao model.
      * @param integer $id
      * @return mixed
      */
@@ -92,13 +104,13 @@ class AlunoController extends Controller
     }
 
     /**
-     * Creates a new Aluno model.
+     * Creates a new Graduacao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Aluno();
+        $model = new Graduacao();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -110,7 +122,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Updates an existing Aluno model.
+     * Updates an existing Graduacao model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -129,7 +141,7 @@ class AlunoController extends Controller
     }
 
     /**
-     * Deletes an existing Aluno model.
+     * Deletes an existing Graduacao model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -142,15 +154,15 @@ class AlunoController extends Controller
     }
 
     /**
-     * Finds the Aluno model based on its primary key value.
+     * Finds the Graduacao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Aluno the loaded model
+     * @return Graduacao the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Aluno::findOne($id)) !== null) {
+        if (($model = Graduacao::findOne($id)) !== null) {
             return $model;
         }
 
