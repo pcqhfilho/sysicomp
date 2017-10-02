@@ -3,11 +3,8 @@ namespace numeros\controllers;
 
 use Yii;
 use PHPExcel;
-use numeros\models\LoginForm;
-use numeros\models\PasswordResetRequestForm;
-use numeros\models\ResetPasswordForm;
-use numeros\models\SignupForm;
-use numeros\models\ContactForm;
+use numeros\models\Professor;
+use numeros\models\AlunoGrad;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -71,82 +68,86 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-      //ALUNO_GRAD
-      $qtdMatCc = (new \yii\db\Query())
-      ->from('j17_aluno_grad')
-      ->where([
+        //ALUNO_GRAD
+        $qtdMatCc = (new \yii\db\Query())
+        ->from('j17_aluno_grad')
+        ->where([
         'COD_CURSO' => 'IE08',
         'DT_EVASAO' => '',
-      ])
-      ->count();
+        ])
+        ->count();
 
-      $qtdMatSi = (new \yii\db\Query())
-      ->from('j17_aluno_grad')
-      ->where([
+        $qtdMatSi = (new \yii\db\Query())
+        ->from('j17_aluno_grad')
+        ->where([
         'COD_CURSO' => 'IE15',
         'DT_EVASAO' => '',
-      ])
-      ->count();
+        ])
+        ->count();
 
-      $qtdEgrPd = (new \yii\db\Query())
-      ->from('j17_aluno_grad')
-      ->where([
+        $qtdEgrPd = (new \yii\db\Query())
+        ->from('j17_aluno_grad')
+        ->where([
         'COD_CURSO' => 'IE06',
         'FORMA_EVASAO' => 'Formado',
-      ])
-      ->count();
+        ])
+        ->count();
 
-      $qtdEgrCc = (new \yii\db\Query())
-      ->from('j17_aluno_grad')
-      ->where([
+        $qtdEgrCc = (new \yii\db\Query())
+        ->from('j17_aluno_grad')
+        ->where([
         'COD_CURSO' => 'IE08',
         'FORMA_EVASAO' => 'Formado',
-      ])
-      ->count();
+        ])
+        ->count();
 
-      $qtdEgrSi = (new \yii\db\Query())
-      ->from('j17_aluno_grad')
-      ->where([
+        $qtdEgrSi = (new \yii\db\Query())
+        ->from('j17_aluno_grad')
+        ->where([
         'COD_CURSO' => 'IE15',
         'FORMA_EVASAO' => 'Formado',
-      ])
-      ->count();
+        ])
+        ->count();
 
-      //ALUNO_PPGI
+        //ALUNO_PPGI
 
-      $qtdMatMest = (new \yii\db\Query())
-      ->from('j17_aluno')
-      ->where([
+        $qtdMatMest = (new \yii\db\Query())
+        ->from('j17_aluno')
+        ->where([
         'status' => 0,
         'curso' => 1,
-      ])
-      ->count();
+        ])
+        ->count();
 
-      $qtdMatDoc = (new \yii\db\Query())
-      ->from('j17_aluno')
-      ->where([
+        $qtdMatDoc = (new \yii\db\Query())
+        ->from('j17_aluno')
+        ->where([
         'status' => 0,
         'curso' => 2,
-      ])
-      ->count();
+        ])
+        ->count();
 
-      $qtdEgrMest = (new \yii\db\Query())
-      ->from('j17_aluno')
-      ->where([
+        $qtdEgrMest = (new \yii\db\Query())
+        ->from('j17_aluno')
+        ->where([
         'status' => 1,
         'curso' => 1,
-      ])
-      ->count();
+        ])
+        ->count();
 
-      $qtdEgrDoc = (new \yii\db\Query())
-      ->from('j17_aluno')
-      ->where([
+        $qtdEgrDoc = (new \yii\db\Query())
+        ->from('j17_aluno')
+        ->where([
         'status' => 1,
         'curso' => 2,
-      ])
-      ->count();
+        ])
+        ->count();
 
-      return $this->render('index',[
+        // DOCENTES
+        $modelProfessor = new Professor();
+        $professorDataProvider = $modelProfessor->read();
+
+        return $this->render('index',[
         'qtdMatCc' => $qtdMatCc,
         'qtdMatSi' => $qtdMatSi,
         'qtdEgrPd' => $qtdEgrPd,
@@ -155,7 +156,8 @@ class SiteController extends Controller
         'qtdMatMest' => $qtdMatMest,
         'qtdMatDoc' => $qtdMatDoc,
         'qtdEgrMest' => $qtdEgrMest,
-        'qtdEgrDoc' => $qtdEgrDoc
-      ]);
+        'qtdEgrDoc' => $qtdEgrDoc,
+        'professorDataProvider' => $professorDataProvider
+        ]);
     }
 }
