@@ -4,6 +4,7 @@ namespace numeros\controllers;
 use Yii;
 use PHPExcel;
 use numeros\models\Professor;
+use numeros\models\AlunoGrad;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;

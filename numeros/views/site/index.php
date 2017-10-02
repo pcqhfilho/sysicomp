@@ -79,17 +79,17 @@ use yii\grid\GridView;
     <div class="row">
       <div class="col-md-4 text-center">
         <h4>Processamento de Dados</h4>
-        <h3 class="qtd"><a href="index.php?r=aluno"><?php echo $qtdEgrPd; ?>
+        <h3 class="qtd"><a href="index.php?r=graduacao/alunos-pd"><?php echo $qtdEgrPd; ?>
           <span class="glyphicon glyphicon-search lupa" aria-hidden="true"></span></a></h3>
       </div>
       <div class="col-md-4 text-center">
         <h4>Ciência da Computação</h4>
-        <h3 class="qtd"><a href="index.php?r=aluno/alunos-cc"><?php echo $qtdEgrCc; ?>
+        <h3 class="qtd"><a href="index.php?r=graduacao/alunos-cc"><?php echo $qtdEgrCc; ?>
           <span class="glyphicon glyphicon-search lupa" aria-hidden="true"></span></a></h3>
       </div>
       <div class="col-md-4 text-center">
         <h4>Sistemas da Informação</h4>
-        <h3 class="qtd"><a href="index.php?r=aluno/alunos-si"><?php echo $qtdEgrSi; ?>
+        <h3 class="qtd"><a href="index.php?r=graduacao/alunos-si"><?php echo $qtdEgrSi; ?>
           <span class="glyphicon glyphicon-search lupa" aria-hidden="true"></span></a></h3>
       </div>
     </div>
@@ -110,7 +110,7 @@ use yii\grid\GridView;
       <div class="col-md-4 col-md-offset-2 text-center">
         <h4>Mestrado</h4>
         <h3 class="qtd">
-          <a href="index.php?r=aluno"><?php echo $qtdEgrMest; ?>
+          <a href="index.php?r=aluno/alunos-mestrado"><?php echo $qtdEgrMest; ?>
             <span class="glyphicon glyphicon-search lupa" aria-hidden="true"></span>
           </a>
         </h3>
@@ -118,7 +118,7 @@ use yii\grid\GridView;
       <div class="col-md-4 text-center">
         <h4>Doutorado</h4>
         <h3 class="qtd">
-          <a href="index.php?r=aluno-mestrado"><?php echo $qtdEgrDoc; ?>
+          <a href="index.php?r=aluno/alunos-doutorado"><?php echo $qtdEgrDoc; ?>
             <span class="glyphicon glyphicon-search lupa" aria-hidden="true"></span>
           </a>
         </h3>
