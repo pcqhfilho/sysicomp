@@ -1,5 +1,6 @@
 <?php 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 ?>
 
@@ -146,12 +147,12 @@ use yii\grid\GridView;
             'dataProvider' => $professorDataProvider,
             'summary' => "",
             'columns' => [
-              [
+              [ 
                 'header' => 'Nome',
                 'format' => 'raw',
                 'attribute' => 'nome',
                 'value' => function ($data){
-                  return Html::a(Html::encode($data->nome),'index.php?r=professor');
+                  return Html::a(Html::encode($data->nome), Url::to(['professor/index', 'id' => $data->id]));
                 }
               ],
               [
