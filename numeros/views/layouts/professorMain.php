@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -12,6 +13,11 @@ use common\widgets\Alert;
 
 AppAsset::register($this);
 
+?>
+
+<?php
+    $id = $this->params['breadcrumbs']['id'];
+    $updatedAt = $this->params['breadcrumbs']['updatedAt']
 ?>
 
 <?php $this->beginPage() ?>
@@ -62,29 +68,26 @@ AppAsset::register($this);
 
             <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.php">Início</a></li>
-                    <li><a href="publicacoes.php">Publicações</a></li>
-                    <li><a href="projetos.php">Projetos de Pesquisa</a></li>
+                    <li><a href="index.php">Início</a></li>
+                    <li class="active"><?=Html::a('Descrição', Url::to(['professor/index', 'id' => $id]));?>
+                    <li><?=Html::a('Publicações', Url::to(['professor/publicacao', 'id' => $id]));?></li>
+                    <li><?=Html::a('Projetos de pesquisa', Url::to(['professor/projeto', 'id' => $id]));?></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orientações <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="graduacao.php">Graduação</a></li>
-                            <li><a href="mestrado.php">Mestrado</a></li>
-                            <li><a href="doutorado.php">Doutorado</a></li>
+                            <li><?=Html::a('Graduação', Url::to(['professor/graduacao', 'id' => $id]));?></li>
+                            <li><?=Html::a('Mestrado', Url::to(['professor/mestrado', 'id' => $id]));?></li>
+                            <li><?=Html::a('Doutorado', Url::to(['professor/doutorado', 'id' => $id]));?></li>
                         </ul>
                     </li>
-                    <li><a href="premios.php">Prêmios</a></li>
+                    <li><?=Html::a('Prêmios', Url::to(['professor/premio', 'id' => $id]));?></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container theme-showcase" role="main">
-        <div class="jumbotron">
-            <!-- VIEWS AQUI! -->
-            <?= $content ?>
-        </div> 
-    </div>
+    <!-- VIEWS AQUI! -->
+    <?= $content ?>
 
     <!-- footer -->
     <div class="container">
@@ -95,7 +98,9 @@ AppAsset::register($this);
                     <p class="text-left">&copy; <a href="http://icomp.ufam.edu.br" target="_blank">IComp 2015</a></p>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6">
-                    <p class="text-right">Atualizado em: xx/xx/xxx </p>
+                    <p class="text-right">
+                        Atualizado em: <?= $updatedAt?>
+                    </p>
                 </div>
             </div>
         </footer>
@@ -106,7 +111,7 @@ AppAsset::register($this);
     <script src="js/docs.min.js"></script>
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 
-    <?php $this->endBody() ?>
+<?php $this->endBody() ?>
 </body>
 <?php $this->endPage() ?>
 </html>

@@ -81,7 +81,7 @@ class Professor extends \yii\db\ActiveRecord
     }
 
     /* This function returns a dataProvider from query: 
-        SELECT nome, updated_at 
+        SELECT *
         FROM j17_user 
         WHERE professor = 1
         and nome like %poderoso%
@@ -100,6 +100,17 @@ class Professor extends \yii\db\ActiveRecord
             'pagination' => false,
         ]);
         return $dataProvider;
+    }
+
+    public function getUpdatedAt($id)
+    {
+        $query = (new \yii\db\Query())
+        ->select(['updated_at'])
+        ->from('j17_user')
+        ->where(['id' => $id])
+        ->one();
+
+        return $query['updated_at'];
     }
 
     /**
