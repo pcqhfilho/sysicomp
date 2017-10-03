@@ -16,8 +16,8 @@ AppAsset::register($this);
 ?>
 
 <?php
-    $id = $this->params['breadcrumbs']['id'];
-    $updatedAt = $this->params['breadcrumbs']['updatedAt']
+    $professor = $this->params['breadcrumbs']['professor'];
+    $updatedAt = $this->params['breadcrumbs']['updatedAt'];
 ?>
 
 <?php $this->beginPage() ?>
@@ -69,18 +69,18 @@ AppAsset::register($this);
             <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Início</a></li>
-                    <li class="active"><?=Html::a('Descrição', Url::to(['professor/index', 'id' => $id]));?>
-                    <li><?=Html::a('Publicações', Url::to(['professor/publicacao', 'id' => $id]));?></li>
-                    <li><?=Html::a('Projetos de pesquisa', Url::to(['professor/projeto', 'id' => $id]));?></li>
+                    <li class="active"><?=Html::a('Descrição', Url::to(['professor/index', 'id' => $professor['id']]));?>
+                    <li><?=Html::a('Publicações', Url::to(['professor/publicacao', 'id' => $professor['id']]));?></li>
+                    <li><?=Html::a('Projetos de pesquisa', Url::to(['professor/projeto', 'id' => $professor['id']]));?></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orientações <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><?=Html::a('Graduação', Url::to(['professor/graduacao', 'id' => $id]));?></li>
-                            <li><?=Html::a('Mestrado', Url::to(['professor/mestrado', 'id' => $id]));?></li>
-                            <li><?=Html::a('Doutorado', Url::to(['professor/doutorado', 'id' => $id]));?></li>
+                            <li><?=Html::a('Graduação', Url::to(['professor/graduacao', 'id' => $professor['id']]));?></li>
+                            <li><?=Html::a('Mestrado', Url::to(['professor/mestrado', 'id' => $professor['id']]));?></li>
+                            <li><?=Html::a('Doutorado', Url::to(['professor/doutorado', 'id' => $professor['id']]));?></li>
                         </ul>
                     </li>
-                    <li><?=Html::a('Prêmios', Url::to(['professor/premio', 'id' => $id]));?></li>
+                    <li><?=Html::a('Prêmios', Url::to(['professor/premio', 'id' => $professor['id']]));?></li>
                 </ul>
             </div>
         </div>
@@ -106,6 +106,7 @@ AppAsset::register($this);
         </footer>
     </div>
 
+    <!-- Scrips to dropdown menu -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>

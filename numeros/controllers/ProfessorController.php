@@ -25,10 +25,10 @@ class ProfessorController extends \yii\web\Controller
     public function actionIndex($id)
     {
         $modelProfessor = new Professor();
-        $updatedAt = $modelProfessor->getUpdatedAt($id);
-        $updatedAt = $this->changeDataFormat($updatedAt);
+        $professor = $modelProfessor->getProfessor($id);
+        $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('index', [
-            'id' => $id,
+            'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
     }
@@ -36,10 +36,10 @@ class ProfessorController extends \yii\web\Controller
     public function actionPublicacao($id)
     {
         $modelProfessor = new Professor();
-        $updatedAt = $modelProfessor->getUpdatedAt($id);
-        $updatedAt = $this->changeDataFormat($updatedAt);
+        $professor = $modelProfessor->getProfessor($id);
+        $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('publicacao', [
-            'id' => $id,
+            'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
     }
@@ -47,10 +47,10 @@ class ProfessorController extends \yii\web\Controller
     public function actionProjeto($id)
     {
         $modelProfessor = new Professor();
-        $updatedAt = $modelProfessor->getUpdatedAt($id);
-        $updatedAt = $this->changeDataFormat($updatedAt);
+        $professor = $modelProfessor->getProfessor($id);
+        $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('projeto', [
-            'id' => $id,
+            'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
     }
@@ -58,10 +58,10 @@ class ProfessorController extends \yii\web\Controller
     public function actionGraduacao($id)
     {
         $modelProfessor = new Professor();
-        $updatedAt = $modelProfessor->getUpdatedAt($id);
-        $updatedAt = $this->changeDataFormat($updatedAt);
+        $professor = $modelProfessor->getProfessor($id);
+        $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('graduacao', [
-            'id' => $id,
+            'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
     }
@@ -69,10 +69,10 @@ class ProfessorController extends \yii\web\Controller
     public function actionMestrado($id)
     {
         $modelProfessor = new Professor();
-        $updatedAt = $modelProfessor->getUpdatedAt($id);
-        $updatedAt = $this->changeDataFormat($updatedAt);
+        $professor = $modelProfessor->getProfessor($id);
+        $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('mestrado', [
-            'id' => $id,
+            'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
     }
@@ -80,10 +80,10 @@ class ProfessorController extends \yii\web\Controller
     public function actionDoutorado($id)
     {
         $modelProfessor = new Professor();
-        $updatedAt = $modelProfessor->getUpdatedAt($id);
-        $updatedAt = $this->changeDataFormat($updatedAt);
+        $professor = $modelProfessor->getProfessor($id);
+        $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('doutorado', [
-            'id' => $id,
+            'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
     }
@@ -91,12 +91,11 @@ class ProfessorController extends \yii\web\Controller
     public function actionPremio($id)
     {
         $modelProfessor = new Professor();
-        $updatedAt = $modelProfessor->getUpdatedAt($id);
-        $updatedAt = $this->changeDataFormat($updatedAt);
+        $professor = $modelProfessor->getProfessor($id);
+        $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('premio', [
-            'id' => $id,
+            'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
     }
-
 }

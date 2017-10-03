@@ -113,6 +113,28 @@ class Professor extends \yii\db\ActiveRecord
         return $query['updated_at'];
     }
 
+    public function getNome($id)
+    {
+        $query = (new \yii\db\Query())
+        ->select(['nome'])
+        ->from('j17_user')
+        ->where(['id' => $id])
+        ->one();
+
+        return $query['nome'];
+    }
+
+    public function getProfessor($id)
+    {
+        $query = (new \yii\db\Query())
+        ->select('*')
+        ->from('j17_user')
+        ->where(['id' => $id])
+        ->one();
+
+        return $query;
+    }
+
     /**
      * @inheritdoc
      */

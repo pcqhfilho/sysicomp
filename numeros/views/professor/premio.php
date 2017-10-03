@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-$this->params['breadcrumbs'] = array ('updatedAt' => $updatedAt, 'id' => $id);
+$this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => $updatedAt);
 ?>
 
 <h1>premio/index</h1>
