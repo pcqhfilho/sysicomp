@@ -10,6 +10,7 @@ use yii\grid\GridView;
 $this->title = ' ALUNOS FORMADOS';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div style="display: flex; flex-direction: column; align-items: center;">
 
     <h2><?= Html::encode($qtdEgr . $this->title) ?></h2>
