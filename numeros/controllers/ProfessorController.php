@@ -17,13 +17,14 @@ class ProfessorController extends \yii\web\Controller
             return $data;
     }
 
-    public function actions()
-    {
+    public function actions(){
+
         $this->layout = '@numeros/views/layouts/professorMain.php';
     }
 
     public function actionIndex($id)
-    {
+    {   
+        
         $modelProfessor = new Professor();
         $professor = $modelProfessor->getProfessor($id);
         $updatedAt = $this->changeDataFormat($professor['updated_at']);
@@ -39,17 +40,6 @@ class ProfessorController extends \yii\web\Controller
         $professor = $modelProfessor->getProfessor($id);
         $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('publicacao', [
-            'professor' => $professor,
-            'updatedAt' => $updatedAt,
-            ]);
-    }
-
-    public function actionProjeto($id)
-    {
-        $modelProfessor = new Professor();
-        $professor = $modelProfessor->getProfessor($id);
-        $updatedAt = $this->changeDataFormat($professor['updated_at']);
-        return $this->render('projeto', [
             'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
@@ -83,17 +73,6 @@ class ProfessorController extends \yii\web\Controller
         $professor = $modelProfessor->getProfessor($id);
         $updatedAt = $this->changeDataFormat($professor['updated_at']);
         return $this->render('doutorado', [
-            'professor' => $professor,
-            'updatedAt' => $updatedAt,
-            ]);
-    }
-
-    public function actionPremio($id)
-    {
-        $modelProfessor = new Professor();
-        $professor = $modelProfessor->getProfessor($id);
-        $updatedAt = $this->changeDataFormat($professor['updated_at']);
-        return $this->render('premio', [
             'professor' => $professor,
             'updatedAt' => $updatedAt,
             ]);
