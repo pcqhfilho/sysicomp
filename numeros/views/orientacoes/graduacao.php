@@ -133,16 +133,16 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
             else{
                 $contaOrientacao = array();
                 
-                for ($i=date("Y")-6; $i <= date("Y"); $i++)
+                for ($i=date("Y")-9; $i <= date("Y"); $i++)
                     $contaOrientacao[$i] = 0; 
                 foreach ($orientacoesAndamentoGraduacaoPorAno as $orientacao)
-                    if($orientacao['ano'] <= date("Y")-6)
-                        $contaOrientacao[date("Y")-6] += $orientacao['total'];
+                    if($orientacao['ano'] <= date("Y")-9)
+                        $contaOrientacao[date("Y")-9] += $orientacao['total'];
                     else
                         $contaOrientacao[$orientacao['ano']] += $orientacao['total'];
                 
-                $str = "['Até " . (date("Y")-5) . "', " . $contaOrientacao[date("Y")-6] . ", 'color: #009688'], ";
-                for ($i=date("Y")-5; $i < date("Y"); $i++){ 
+                $str = "['Até " . (date("Y")-8) . "', " . $contaOrientacao[date("Y")-9] . ", 'color: #009688'], ";
+                for ($i=date("Y")-8; $i < date("Y"); $i++){ 
                     $str .= "['" . $i . "', " . $contaOrientacao[$i] . ", 'color: #009688'], "; 
                 }
                 $str .= "['" . date("Y") . "', " . $contaOrientacao[date("Y")] . ", 'color: #009688']";    
@@ -179,16 +179,16 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
             else{
                 $contaOrientacao = array();
                 
-                for ($i=date("Y")-6; $i <= date("Y"); $i++)
+                for ($i=date("Y")-9; $i <= date("Y"); $i++)
                     $contaOrientacao[$i] = 0; 
                 foreach ($orientacoesConcluidasGraduacaoPorAno as $orientacao)
-                    if($orientacao['ano'] <= date("Y")-6)
-                        $contaOrientacao[date("Y")-6] += $orientacao['total'];
+                    if($orientacao['ano'] <= date("Y")-9)
+                        $contaOrientacao[date("Y")-9] += $orientacao['total'];
                     else
                         $contaOrientacao[$orientacao['ano']] += $orientacao['total'];
                 
-                $str = "['Até " . (date("Y")-5) . "', " . $contaOrientacao[date("Y")-6] . ", 'color: #009688'], ";
-                for ($i=date("Y")-5; $i < date("Y"); $i++){ 
+                $str = "['Até " . (date("Y")-8) . "', " . $contaOrientacao[date("Y")-9] . ", 'color: #009688'], ";
+                for ($i=date("Y")-8; $i < date("Y"); $i++){ 
                     $str .= "['" . $i . "', " . $contaOrientacao[$i] . ", 'color: #009688'], "; 
                 }
                 $str .= "['" . date("Y") . "', " . $contaOrientacao[date("Y")] . ", 'color: #009688']";    
@@ -198,7 +198,7 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
     ]);
 
     var options = {
-        title: 'Orientações de Graduação Concluídas (Últimos 10 anos)',
+        title: 'Orientações de Graduação Concluídas',
         legend: 'none',
         hAxis: {title: 'Ano', titleTextStyle: {italic: false}},
         vAxis: {title: 'Orientações', titleTextStyle: {italic: false}, format: '#'}
