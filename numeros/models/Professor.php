@@ -99,6 +99,7 @@ class Professor extends \yii\db\ActiveRecord
             'query' => $query,
             'pagination' => false,
         ]);
+
         return $dataProvider;
     }
 
@@ -110,18 +111,7 @@ class Professor extends \yii\db\ActiveRecord
         ->where(['id' => $id])
         ->one();
 
-        return $query['updated_at'];
-    }
-
-    public function getNome($id)
-    {
-        $query = (new \yii\db\Query())
-        ->select(['nome'])
-        ->from('j17_user')
-        ->where(['id' => $id])
-        ->one();
-
-        return $query['nome'];
+        return $query;
     }
 
     public function getProfessor($id)
