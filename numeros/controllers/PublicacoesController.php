@@ -26,6 +26,11 @@ class PublicacoesController extends \yii\web\Controller
         $professor = $modelProfessor->getProfessor($id);
         $updatedAt = $this->changeDataFormat($professor['updated_at']);
 
+        //Povoando variaveis com Querys referentes a Publicações
+        //utilizando os parametros id do professor e tipo.
+
+        //- Tipo (1 - Conferência, 2 - Periódico, 3 - Livro, 4 - Capítulo)
+
         $publicacoesEmConferencias = $modelPublicacoes->getPublicacoesPorTipo($id, 1);
         $publicacoesEmPeriodicos = $modelPublicacoes->getPublicacoesPorTipo($id, 2);
         $publicacoesEmLivros = $modelPublicacoes->getPublicacoesPorTipo($id, 3);

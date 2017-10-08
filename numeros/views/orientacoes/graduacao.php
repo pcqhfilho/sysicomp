@@ -40,14 +40,11 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
             </div>
             <div class="panel-body">
             <?php 
-                echo "<ol>";
-                foreach ($orientacoesAndamentoGraduacao as $orientacao) {
-                    echo "<li><strong>" . $orientacao['titulo'] . ".</strong> ";
-                    echo $orientacao['aluno'] . ", ";
-                    echo $orientacao['ano'] . ". ";
-                    echo $orientacao['natureza'] . ".</li><br>";
-                }	
-                echo "</ol>";
+
+                //Chamando a função povoaPainel
+                //usando a query $orientacoesAndamentoGraduacao como parametro
+
+                povoaPainel($orientacoesAndamentoGraduacao);
             ?>    
             </div>
         </div>
@@ -64,20 +61,34 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
                 <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
             </div>
             <div class="panel-body">
-            <?php 
-                echo "<ol>";
-                foreach ($orientacoesConcluidasGraduacao as $orientacao) {
-                    echo "<li><strong>" . $orientacao['titulo'] . ".</strong> ";
-                    echo $orientacao['aluno'] . ", ";
-                    echo $orientacao['ano'] . ". ";
-                    echo $orientacao['natureza'] . ".</li><br>";
-                }	
-                echo "</ol>";
+            <?php
+
+                //Chamando a função povoaPainel
+                //usando a query $orientacoesConcluidasGraduacao como parametro
+
+                povoaPainel($orientacoesConcluidasGraduacao);
             ?>    
             </div>
         </div>
         <?php } ?>
     </div>
+
+    <?php
+
+        //Função que povoa o painel referente a Graduação
+        //usando os parametros titulo, aluno, ano e natureza.
+
+        function povoaPainel($arrayOrientacoes){
+            echo "<ol>";
+            foreach ($arrayOrientacoes as $orientacao) {
+                echo "<li><strong>" . $orientacao['titulo'] . ".</strong> ";
+                echo $orientacao['aluno'] . ", ";
+                echo $orientacao['ano'] . ". ";
+                echo $orientacao['natureza'] . ".</li><br>";
+            }	
+            echo "</ol>";
+        }
+    ?>
 
 </div>
 
@@ -87,6 +98,9 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
 <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
 <script type="text/javascript">
+
+    //JavaScript referente a interação com os paineis
+
     $(document).on('click', '.panel-heading span.clickable', function (e) {
         var $this = $(this);
         if (!$this.hasClass('panel-collapsed')) {
@@ -120,6 +134,9 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <script type="text/javascript">
+
+    //JavaScript referente a criação dos gráficos
+
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart() {

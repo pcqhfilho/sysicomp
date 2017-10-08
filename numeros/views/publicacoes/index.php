@@ -37,8 +37,11 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
                 <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
             </div>
             <div class="panel-body">
-            <?php 
-            
+            <?php
+
+                //Preenchendo painel de publicações em Conferências
+                //utilizando os parametros titulo, autores, local, ano e natureza.
+                
                 echo "<ol>";
                 foreach ($publicacoesEmConferencias as $publicacao) {
                     echo "<li><strong>" . $publicacao['titulo'] . ". </strong>";
@@ -63,7 +66,11 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
                 <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
             </div>
             <div class="panel-body">
-            <?php 
+            <?php
+
+                //Preenchendo painel de publicações em Periodicos
+                //utilizando os parametros titulo, autores, local e ano. 
+
                 echo "<ol>";
                 foreach ($publicacoesEmPeriodicos as $publicacao) {
                     echo "<li><strong>" . $publicacao['titulo'] . ". </strong>";
@@ -87,7 +94,11 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
                 <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
             </div>
             <div class="panel-body">
-            <?php 
+            <?php
+
+                //Preenchendo painel de publicações de Livros
+                //utilizando os parametros titulo e ano. 
+
                 echo "<ol>";
                 foreach ($publicacoesEmLivros as $publicacao) {
                     echo "<li><strong>" . $publicacao['titulo'] . ". </strong>";
@@ -109,7 +120,9 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
                 <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
             </div>
             <div class="panel-body">
-            <?php 
+            <?php
+                //Preenchendo painel de publicações em capitulos de livros
+                //utilizando os parametros titulo, local e ano. 
                 echo "<ol>";
                 foreach ($publicacoesEmCapitulos as $publicacao) {
                     echo "<li><strong>" . $publicacao['titulo'] . ". </strong>";
@@ -131,6 +144,9 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
 <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
 <script type="text/javascript">
+
+    //JavaScript referente a interação com os paineis
+
     $(document).on('click', '.panel-heading span.clickable', function (e) {
         var $this = $(this);
         if (!$this.hasClass('panel-collapsed')) {
@@ -164,6 +180,9 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <script type="text/javascript">
+
+    //JavaScript referente a criação dos gráficos
+
     google.load("visualization", "1", {packages:["corechart"]});
     
     google.setOnLoadCallback(drawChart);
