@@ -8,7 +8,7 @@ class ProfessorController extends \yii\web\Controller
 {
 
     // This function changes the date format 'y-m-d' to 'd/m/Y' because in the stored data contains both those date formats
-    public function changeDataFormat($data){
+    private function changeDataFormat($data){
             if($data)
             if($data[2] != '/'){
               $date = date_create($data);

@@ -70,14 +70,14 @@ AppAsset::register($this);
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Início</a></li>
                     <li class="active"><?=Html::a('Descrição', Url::to(['professor/index', 'id' => $professor['id']]));?>
-                    <li><?=Html::a('Publicações', Url::to(['professor/publicacao', 'id' => $professor['id']]));?></li>
+                    <li><?=Html::a('Publicações', Url::to(['publicacoes/index', 'id' => $professor['id']]));?></li>
                     <li><?=Html::a('Projetos de pesquisa', Url::to(['projetos/index', 'id' => $professor['id']]));?></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orientações <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><?=Html::a('Graduação', Url::to(['professor/graduacao', 'id' => $professor['id']]));?></li>
-                            <li><?=Html::a('Mestrado', Url::to(['professor/mestrado', 'id' => $professor['id']]));?></li>
-                            <li><?=Html::a('Doutorado', Url::to(['professor/doutorado', 'id' => $professor['id']]));?></li>
+                            <li><?=Html::a('Graduação', Url::to(['orientacoes/graduacao', 'id' => $professor['id']]));?></li>
+                            <li><?=Html::a('Mestrado', Url::to(['orientacoes/mestrado', 'id' => $professor['id']]));?></li>
+                            <li><?=Html::a('Doutorado', Url::to(['orientacoes/doutorado', 'id' => $professor['id']]));?></li>
                         </ul>
                     </li>
                     <li><?=Html::a('Prêmios', Url::to(['premios/index', 'id' => $professor['id']]));?></li>
