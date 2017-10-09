@@ -69,10 +69,10 @@ AppAsset::register($this);
             <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Início</a></li>
-                    <li class="active"><?=Html::a('Descrição', Url::to(['professor/index', 'id' => $professor['id']]));?>
-                    <li><?=Html::a('Publicações', Url::to(['publicacoes/index', 'id' => $professor['id']]));?></li>
-                    <li><?=Html::a('Projetos de pesquisa', Url::to(['projetos/index', 'id' => $professor['id']]));?></li>
-                    <li class="dropdown">
+                    <li id="li-index"><?=Html::a('Descrição', Url::to(['professor/index', 'id' => $professor['id']]));?>
+                    <li id="li-publicacoes"><?=Html::a('Publicações', Url::to(['publicacoes/index', 'id' => $professor['id']]));?></li>
+                    <li id="li-projetos"><?=Html::a('Projetos de pesquisa', Url::to(['projetos/index', 'id' => $professor['id']]));?></li>
+                    <li id="li-orientacoes" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orientações <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><?=Html::a('Graduação', Url::to(['orientacoes/graduacao', 'id' => $professor['id']]));?></li>
@@ -80,7 +80,7 @@ AppAsset::register($this);
                             <li><?=Html::a('Doutorado', Url::to(['orientacoes/doutorado', 'id' => $professor['id']]));?></li>
                         </ul>
                     </li>
-                    <li><?=Html::a('Prêmios', Url::to(['premios/index', 'id' => $professor['id']]));?></li>
+                    <li id="li-premios"><?=Html::a('Prêmios', Url::to(['premios/index', 'id' => $professor['id']]));?></li>
                 </ul>
             </div>
         </div>
@@ -106,7 +106,6 @@ AppAsset::register($this);
         </footer>
     </div>
 
-    <!-- Scrips to dropdown menu -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>

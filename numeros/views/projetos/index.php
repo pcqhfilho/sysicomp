@@ -4,6 +4,19 @@
 $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => $updatedAt);
 ?>
 
+ <!-- Este script troca a classe da aba do menu correspondente à página acessada -->
+<script>
+    var li =document.getElementsByTagName("li");
+    for(var i=0;i<li.length;i++) {
+        if(li[i].className == "dropdown" || li[i].className == "dropdown active")
+            li[i].className = "dropdown";
+        else
+            li[i].className = "";
+    }
+    li = document.getElementById("li-projetos");
+    li.className = "active";
+</script>
+
 <div class="container theme-showcase" role="main">
     <div id="visualization_wrap">
         <div id="projetos" ></div>
@@ -35,9 +48,6 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/docs.min.js"></script>
-<script src="j../s/ie10-viewport-bug-workaround.js"></script>
 
 <script type="text/javascript">
     $(document).on('click', '.panel-heading span.clickable', function (e) {

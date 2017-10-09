@@ -4,6 +4,19 @@
 $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $updatedAt);
 ?>
 
+ <!-- Este script troca a classe da aba do menu correspondente à página acessada -->
+<script>
+    var li =document.getElementsByTagName("li");
+    for(var i=0;i<li.length;i++) {
+        if(li[i].className == "dropdown" || li[i].className == "dropdown active")
+            li[i].className = "dropdown";
+        else
+            li[i].className = "";
+    }
+    li = document.getElementById("li-orientacoes");
+    li.className = "dropdown active";
+</script>
+
 <div class="container theme-showcase" role="main">
 
     <div class="row">
@@ -230,3 +243,4 @@ $this->params['breadcrumbs'] = array('professor' => $professor, 'updatedAt' => $
     drawChart2();
     });
 </script>
+
