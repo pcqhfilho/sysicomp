@@ -18,7 +18,7 @@ class GraduacaoSearch extends Graduacao
     public function rules()
     {
         return [
-            [['id', 'ID_PESSOA'], 'integer'],
+            [['ID_PESSOA'], 'integer'],
             [['NOME_PESSOA', 'SEXO', 'DT_NASCIMENTO', 'FORMA_INGRESSO', 'FORMA_EVASAO', 'COD_CURSO', 'NOME_UNIDADE', 'MATR_ALUNO', 'NUM_VERSAO', 'PERIODO_INGRESSO', 'DT_EVASAO', 'PERIODO_EVASAO'], 'safe'],
         ];
     }
@@ -59,7 +59,6 @@ class GraduacaoSearch extends Graduacao
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'ID_PESSOA' => $this->ID_PESSOA,
         ]);
 

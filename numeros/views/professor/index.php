@@ -12,6 +12,19 @@ $email = explode("@", $professor['email']);
 $formacao = explode(";", $professor['formacao']);
 ?>
 
+ <!-- Este script troca a classe da aba do menu correspondente à página acessada -->
+<script>
+    var li =document.getElementsByTagName("li");
+    for(var i=0;i<li.length;i++) {
+        if(li[i].className == "dropdown" || li[i].className == "dropdown active")
+            li[i].className = "dropdown";
+        else
+            li[i].className = "";
+    }
+    li = document.getElementById("li-index");
+    li.className = "active";
+</script>
+
 <div class="container theme-showcase" role="main">
     <div class="jumbotron">
         <div class="row">
@@ -54,4 +67,3 @@ $formacao = explode(";", $professor['formacao']);
         <p class="text-justify"><?=$professor['resumo']?></p>
     </div>
 </div>
-
