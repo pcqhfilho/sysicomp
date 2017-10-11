@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
@@ -147,18 +147,24 @@ use yii\grid\GridView;
             'dataProvider' => $professorDataProvider,
             'summary' => "",
             'columns' => [
-              [ 
-                'header' => 'Nome',
+              [
+                'header' => 'Professor',
                 'format' => 'raw',
                 'attribute' => 'nome',
                 'value' => function ($data){
                   return Html::a(Html::encode($data->nome), Url::to(['professor/index', 'id' => $data->id]));
                 }
               ],
+
               [
-                'header' => 'Ultima atualização',
+                'header' => 'Formação',        
+
+              ],
+
+              [
+                'header' => 'Última atualização',
                 'attribute' => 'updated_at',
-                
+
                 // This function changes the date format 'y-m-d' to 'd/m/y' because in the stored data have both those date formats
                 'value' => function ($data){
                   if($data->updated_at)
@@ -169,10 +175,10 @@ use yii\grid\GridView;
                   return $data->updated_at;
                 }
               ],
-              
+
             ],
-          ]); 
+          ]);
         ?>
-    </div>    
+    </div>
   </div>
 </section>
