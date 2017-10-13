@@ -5,6 +5,7 @@ use Yii;
 use PHPExcel;
 use numeros\models\Professor;
 use numeros\models\AlunoGrad;
+use numeros\models\Projetos;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -147,6 +148,17 @@ class SiteController extends Controller
         $modelProfessor = new Professor();
         $professorDataProvider = $modelProfessor->read();
 
+        //PROJETOS
+        $modelProjetos = new Projetos();
+        $queryProjetos = $modelProjetos->getProjetosAndamento();
+
+        $qtdProjetos = (new \yii\db\Query())
+        ->from('j17_projetos')
+        ->where([
+        'fim' => 0,
+        ])
+        ->count();
+
         return $this->render('index',[
         'qtdMatCc' => $qtdMatCc,
         'qtdMatSi' => $qtdMatSi,
@@ -157,6 +169,8 @@ class SiteController extends Controller
         'qtdMatDoc' => $qtdMatDoc,
         'qtdEgrMest' => $qtdEgrMest,
         'qtdEgrDoc' => $qtdEgrDoc,
+        'qtdProjetos' => $qtdProjetos,
+        'queryProjetos' => $queryProjetos,
         'professorDataProvider' => $professorDataProvider
         ]);
     }
