@@ -72,6 +72,21 @@ class Projetos extends \yii\db\ActiveRecord
         return $query;
     }
 
+    public function getProjetosAndamento()
+    {
+        $query = (new \yii\db\Query())
+        ->select('*')
+        ->from('j17_projetos')
+        ->where(['fim' => 0])
+        ->orderBy([
+        'inicio' => SORT_DESC,
+        'titulo' => SORT_ASC,
+        ])
+        ->all();
+
+        return $query;
+    }
+
     public function getProjetosPorAno($idProfessor)
     {
         $queryProjetosPorAno = (new \Yii\db\Query())
@@ -81,17 +96,17 @@ class Projetos extends \yii\db\ActiveRecord
             'and',
             ['idProfessor' => $idProfessor],
             [
-                'or', 
+                'or',
                 [
-                    '>=', 
-                    'inicio', 
+                    '>=',
+                    'inicio',
                     ('Year(now()) - 9')
-                ], 
+                ],
                 [
-                    '<=', 
-                    'fim', 
+                    '<=',
+                    'fim',
                     'Year(now())'
-                ]  
+                ]
             ]
         ])
         ->orderBy('inicio ASC')

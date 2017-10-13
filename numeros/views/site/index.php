@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
@@ -147,7 +147,7 @@ use yii\grid\GridView;
             'dataProvider' => $professorDataProvider,
             'summary' => "",
             'columns' => [
-              [ 
+              [
                 'header' => 'Nome',
                 'format' => 'raw',
                 'attribute' => 'nome',
@@ -158,7 +158,7 @@ use yii\grid\GridView;
               [
                 'header' => 'Ultima atualização',
                 'attribute' => 'updated_at',
-                
+
                 // This function changes the date format 'y-m-d' to 'd/m/y' because in the stored data have both those date formats
                 'value' => function ($data){
                   if($data->updated_at)
@@ -169,10 +169,50 @@ use yii\grid\GridView;
                   return $data->updated_at;
                 }
               ],
-              
+
             ],
-          ]); 
+          ]);
         ?>
-    </div>    
+    </div>
   </div>
+</section>
+
+<!-- Projetos Section -->
+<section class="success" id="projetos">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center headerProjetos">
+                <h3><?php echo $qtdProjetos;?> Projetos de Pesquisa em Andamento</h3>
+                <p>Para conferir os detalhes dos projetos, clique no título do projeto.</p>
+                <hr class="hr-section">
+            </div>
+        </div>
+        <!-- projetos function -->
+        <div class="panel-group" role="tablist" aria-multiselectable="true">
+          <?php
+              $i = 1;
+              foreach ($queryProjetos as $projeto){
+                    echo '
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                          <h5 class="panel-title">
+                            <a role="button" data-toggle="collapse" href="#collapse'.$i.'" aria-expanded="true" aria-controls="collapseOne">
+                              <strong>' . $projeto['inicio'] . ' - Atual.</strong> ' . $projeto['titulo'] . '
+                            </a>
+                          </h5>
+                        </div>
+                        <div id="collapse'.$i.'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'.$i.'">
+            				    	<div class="panel-body">
+            				    		<p class="text-justify"><strong>Descrição: </strong>'. $projeto['descricao'] . '</p>
+                            <p><strong>Período: </strong>'. $projeto['inicio'] . ' - Atual</p>
+                            <p><strong>Integrantes: </strong>'. $projeto['integrantes'] . '</p>
+                            <p><strong>Financiadores: </strong>'. $projeto['financiadores'] . '</p>
+                          </div>
+                        </div>
+                      </div>';
+                  $i++;
+                }
+          ?>
+        </div>
+    </div>
 </section>
