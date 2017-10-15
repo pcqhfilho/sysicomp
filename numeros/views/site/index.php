@@ -157,7 +157,7 @@ use yii\grid\GridView;
               ],
 
               [
-                'header' => 'Formação',        
+                'header' => 'Formação',
 
               ],
 
@@ -182,3 +182,28 @@ use yii\grid\GridView;
     </div>
   </div>
 </section>
+
+
+<!-- Publicacoes Section -->
+   <section id="publicacoes">
+       <div class="container">
+           <div class="row">
+               <div class="col-md-12 text-center">
+                   <h3>Publicações em Conferências e Periódicos</h3>
+                   <p>Para conferir a lista de artigos de cada ano, clique nas colunas do gráfico.</p>
+                   <hr class="hr-section">
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-12 text-center">
+                   <div id="grafico"></div>
+               </div>
+           </div>
+           <br>
+           <div class="row">
+               <div class="col-md-12 text-right">
+                   <small>Atualizado em <?php echo date('d/m/Y'); ?>.</small>
+               </div>
+           </div>
+       </div>
+   </section>
