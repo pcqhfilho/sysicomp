@@ -149,14 +149,22 @@ use yii\grid\GridView;
             'columns' => [
               [
                 'header' => 'Nome',
+
+                'header' => 'Professor',
                 'format' => 'raw',
                 'attribute' => 'nome',
                 'value' => function ($data){
                   return Html::a(Html::encode($data->nome), Url::to(['professor/index', 'id' => $data->id]));
                 }
               ],
+
               [
-                'header' => 'Ultima atualização',
+                'header' => 'Formação',
+
+              ],
+
+              [
+                'header' => 'Última atualização',
                 'attribute' => 'updated_at',
 
                 // This function changes the date format 'y-m-d' to 'd/m/y' because in the stored data have both those date formats
@@ -176,6 +184,30 @@ use yii\grid\GridView;
     </div>
   </div>
 </section>
+
+<!-- Publicacoes Section -->
+   <section id="publicacoes">
+       <div class="container">
+           <div class="row">
+               <div class="col-md-12 text-center">
+                   <h3>Publicações em Conferências e Periódicos</h3>
+                   <p>Para conferir a lista de artigos de cada ano, clique nas colunas do gráfico.</p>
+                   <hr class="hr-section">
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-12 text-center">
+                   <div id="grafico"></div>
+               </div>
+           </div>
+           <br>
+           <div class="row">
+               <div class="col-md-12 text-right">
+                   <small>Atualizado em <?php echo date('d/m/Y'); ?>.</small>
+               </div>
+           </div>
+       </div>
+   </section>
 
 <!-- Projetos Section -->
 <section class="success" id="projetos">
