@@ -1,5 +1,6 @@
 <?php
 /* @var $this yii\web\View */
+
 $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => $updatedAt);
 ?>
 
@@ -19,17 +20,17 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
 <div class="container theme-showcase" role="main">
 
     <div class="row">
-        <?php 
-            if(!empty($publicacoesEmConferencias)){ 
+        <?php
+            if(!empty($publicacoesEmConferencias)){
         ?>
         <div class="col-md-12">
             <div id="visualization_wrap">
                 <div id="conferencias" ></div>
             </div>
         </div>
-        <?php 
-            } 
-            if(!empty($publicacoesEmPeriodicos)){ 
+        <?php
+            }
+            if(!empty($publicacoesEmPeriodicos)){
         ?>
         <div class="col-md-12">
             <div id="visualization_wrap">
@@ -54,7 +55,6 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
 
                 //Preenchendo painel de publicações em Conferências
                 //utilizando os parametros titulo, autores, local, ano e natureza.
-                
                 echo "<ol>";
                 foreach ($publicacoesEmConferencias as $publicacao) {
                     echo "<li><strong>" . $publicacao['titulo'] . ". </strong>";
@@ -63,9 +63,9 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
                     echo $publicacao['ano'] . ". </i>";
                     echo $publicacao['natureza'] . ".";
                     echo "</li><br>";
-                }	
+                }
                 echo "</ol>";
-            ?>    
+            ?>
             </div>
         </div>
         <?php } ?>
@@ -82,7 +82,7 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
             <?php
 
                 //Preenchendo painel de publicações em Periodicos
-                //utilizando os parametros titulo, autores, local e ano. 
+                //utilizando os parametros titulo, autores, local e ano.
 
                 echo "<ol>";
                 foreach ($publicacoesEmPeriodicos as $publicacao) {
@@ -91,9 +91,9 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
                     echo "<i>" . $publicacao['local'] . ", ";
                     echo $publicacao['ano'] . ". </i>";
                     echo "</li><br>";
-                }	
+                }
                 echo "</ol>";
-            ?>    
+            ?>
             </div>
         </div>
         <?php } ?>
@@ -110,20 +110,20 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
             <?php
 
                 //Preenchendo painel de publicações de Livros
-                //utilizando os parametros titulo e ano. 
+                //utilizando os parametros titulo e ano.
 
                 echo "<ol>";
                 foreach ($publicacoesEmLivros as $publicacao) {
                     echo "<li><strong>" . $publicacao['titulo'] . ". </strong>";
                     echo $publicacao['ano'] . ". </i>";
                     echo "</li><br>";
-                }	
+                }
                 echo "</ol>";
-            ?>    
+            ?>
             </div>
         </div>
         <?php } ?>
-        
+
         <?php if (!empty($publicacoesEmCapitulos)) { ?>
         <div class="panel panel-default">
             <div class="panel-heading clickable">
@@ -135,22 +135,22 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
             <div class="panel-body">
             <?php
                 //Preenchendo painel de publicações em capitulos de livros
-                //utilizando os parametros titulo, local e ano. 
+                //utilizando os parametros titulo, local e ano.
                 echo "<ol>";
                 foreach ($publicacoesEmCapitulos as $publicacao) {
                     echo "<li><strong>" . $publicacao['titulo'] . ". </strong>";
                     echo "<i>" . $publicacao['local'] . ", ";
                     echo $publicacao['ano'] . ". </i>";
                     echo "</li><br>";
-                }	
+                }
                 echo "</ol>";
-            ?>    
+            ?>
             </div>
         </div>
         <?php } ?>
     </div>
-</div> 
-    
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/docs.min.js"></script>
@@ -197,31 +197,31 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
     //JavaScript referente a criação dos gráficos
 
     google.load("visualization", "1", {packages:["corechart"]});
-    
+
     google.setOnLoadCallback(drawChart);
     function drawChart() {
     var data = google.visualization.arrayToDataTable([
         ['Ano', 'Artigos', { role: 'style' }],
-        <?php 
+        <?php
             if (empty($publicacoesEmConferenciasPorAno)) {
                 echo "['', 0, '']";
             }
             else{
                 $contaPublicacao = array();
-                
+
                 for ($i=date("Y")-6; $i <= date("Y"); $i++)
-                    $contaPublicacao[$i] = 0; 
+                    $contaPublicacao[$i] = 0;
                 foreach ($publicacoesEmConferenciasPorAno as $publicacao)
                     if($publicacao['ano'] <= date("Y")-6)
                         $contaPublicacao[date("Y")-6] += $publicacao['total'];
                     else
                         $contaPublicacao[$publicacao['ano']] += $publicacao['total'];
-                
+
                 $str = "['Até " . (date("Y")-5) . "', " . $contaPublicacao[date("Y")-6] . ", 'color: #009688'], ";
-                for ($i=date("Y")-5; $i < date("Y"); $i++){ 
-                    $str .= "['" . $i . "', " . $contaPublicacao[$i] . ", 'color: #009688'], "; 
+                for ($i=date("Y")-5; $i < date("Y"); $i++){
+                    $str .= "['" . $i . "', " . $contaPublicacao[$i] . ", 'color: #009688'], ";
                 }
-                $str .= "['" . date("Y") . "', " . $contaPublicacao[date("Y")] . ", 'color: #009688']";    
+                $str .= "['" . date("Y") . "', " . $contaPublicacao[date("Y")] . ", 'color: #009688']";
                 echo $str;
             }
         ?>
@@ -247,26 +247,26 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
     function drawChart2() {
     var data = google.visualization.arrayToDataTable([
         ['Ano', 'Artigos', { role: 'style' }],
-        <?php 
+        <?php
             if (empty($publicacoesEmPeriodicosPorAno)) {
                 echo "['', 0, '']";
             }
             else{
                 $contaPublicacao = array();
-                
+
                 for ($i=date("Y")-6; $i <= date("Y"); $i++)
-                    $contaPublicacao[$i] = 0; 
+                    $contaPublicacao[$i] = 0;
                 foreach ($publicacoesEmPeriodicosPorAno as $publicacao)
                     if($publicacao['ano'] <= date("Y")-6)
                         $contaPublicacao[date("Y")-6] += $publicacao['total'];
                     else
                         $contaPublicacao[$publicacao['ano']] += $publicacao['total'];
-                
+
                 $str = "['Até " . (date("Y")-5) . "', " . $contaPublicacao[date("Y")-6] . ", 'color: #009688'], ";
-                for ($i=date("Y")-5; $i < date("Y"); $i++){ 
-                    $str .= "['" . $i . "', " . $contaPublicacao[$i] . ", 'color: #009688'], "; 
+                for ($i=date("Y")-5; $i < date("Y"); $i++){
+                    $str .= "['" . $i . "', " . $contaPublicacao[$i] . ", 'color: #009688'], ";
                 }
-                $str .= "['" . date("Y") . "', " . $contaPublicacao[date("Y")] . ", 'color: #009688']";    
+                $str .= "['" . date("Y") . "', " . $contaPublicacao[date("Y")] . ", 'color: #009688']";
                 echo $str;
             }
         ?>

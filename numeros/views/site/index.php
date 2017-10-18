@@ -2,6 +2,10 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
+
+$this->registerJsFile('@web/js/jquery.js');
+$this->registerJsFile('@web/js/bootstrap.min.js');
+
 ?>
 
 <!-- Alunos section -->
