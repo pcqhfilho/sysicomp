@@ -4,6 +4,7 @@ namespace numeros\controllers;
 use Yii;
 use PHPExcel;
 use numeros\models\Professor;
+use numeros\models\ProfessorSearch;
 use numeros\models\AlunoGrad;
 use numeros\models\Projetos;
 use yii\base\InvalidParamException;
@@ -145,8 +146,10 @@ class SiteController extends Controller
         ->count();
 
         // DOCENTES
-        $modelProfessor = new Professor();
-        $professorDataProvider = $modelProfessor->read();
+        $searchModelProfessor = new ProfessorSearch();
+        //$modelProfessor = new Professor();
+        //$professorDataProvider = $modelProfessor->read();
+        $professorDataProvider = $searchModelProfessor->searchProfessor(Yii::$app->request->queryParams);
 
         //PROJETOS
         $modelProjetos = new Projetos();
@@ -171,7 +174,8 @@ class SiteController extends Controller
         'qtdEgrDoc' => $qtdEgrDoc,
         'qtdProjetos' => $qtdProjetos,
         'queryProjetos' => $queryProjetos,
-        'professorDataProvider' => $professorDataProvider
+        'professorDataProvider' => $professorDataProvider,
+        'searchModelProfessor' => $searchModelProfessor,
         ]);
     }
 }

@@ -2,6 +2,17 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
+<<<<<<< HEAD
+=======
+use yii\widgets\Pjax;
+
+Pjax::begin();
+
+$this->registerJsFile('@web/js/jquery.js');
+$this->registerJsFile('@web/js/bootstrap.min.js');
+
+
+>>>>>>> 84f84e8... Funcionalidade pesquisar Lista de Docentes
 ?>
 
 <!-- Alunos section -->
@@ -143,14 +154,14 @@ use yii\grid\GridView;
             <hr class="hr-section">
         </div>
         <?php
+
           echo GridView::widget([
             'dataProvider' => $professorDataProvider,
+            'filterModel' => $searchModelProfessor,
             'summary' => "",
             'columns' => [
               [
-                'header' => 'Nome',
-
-                'header' => 'Professor',
+                'label' => 'Nome',
                 'format' => 'raw',
                 'attribute' => 'nome',
                 'value' => function ($data){
@@ -159,13 +170,12 @@ use yii\grid\GridView;
               ],
 
               [
-                'header' => 'Formação',
+                'label' => 'Formação',
 
               ],
 
               [
-                'header' => 'Última atualização',
-                'attribute' => 'updated_at',
+                'label' => 'Última atualização',
 
                 // This function changes the date format 'y-m-d' to 'd/m/y' because in the stored data have both those date formats
                 'value' => function ($data){
@@ -248,3 +258,5 @@ use yii\grid\GridView;
         </div>
     </div>
 </section>
+
+<?php Pjax::end(); ?>
