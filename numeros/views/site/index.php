@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
-
 use yii\widgets\Pjax;
 
 Pjax::begin();
@@ -10,6 +9,7 @@ Pjax::begin();
 
 $this->registerJsFile('@web/js/jquery.js');
 $this->registerJsFile('@web/js/bootstrap.min.js');
+
 
 
 ?>
