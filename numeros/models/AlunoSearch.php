@@ -123,13 +123,13 @@ class AlunoSearch extends Aluno
             ->andFilterWhere(['like', 'crgrad', $this->crgrad])
             ->andFilterWhere(['like', 'dataformaturagrad', $this->dataformaturagrad])
             ->andFilterWhere(['like', 'sede', $this->sede]);
-            
+
         return $dataProvider;
     }
 
     // Função que filtra alunos egressos do ppgi de acordo com o curso passado como parametro
     public function searchAlunos($params, $curso){
-        
+
         $query = Aluno::find()
         ->where([
             'curso' => $curso,
@@ -152,7 +152,7 @@ class AlunoSearch extends Aluno
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'anoconclusao' , $this->anoconclusao]);
-        
+
 
         return $dataProvider;
     }

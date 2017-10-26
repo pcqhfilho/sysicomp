@@ -23,8 +23,7 @@ class ProfessorController extends \yii\web\Controller
     }
 
     public function actionIndex($id)
-    {   
-        
+    {
         $modelProfessor = new Professor();
         $professor = $modelProfessor->getProfessor($id);
         $updatedAt = $this->changeDataFormat($professor['updated_at']);

@@ -2,9 +2,15 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
+
+Pjax::begin();
+
 
 $this->registerJsFile('@web/js/jquery.js');
 $this->registerJsFile('@web/js/bootstrap.min.js');
+
+
 
 ?>
 
@@ -147,21 +153,28 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
             <hr class="hr-section">
         </div>
         <?php
+
           echo GridView::widget([
             'dataProvider' => $professorDataProvider,
+            'filterModel' => $searchModelProfessor,
             'summary' => "",
             'columns' => [
               [
-                'header' => 'Nome',
+                'label' => 'Nome',
                 'format' => 'raw',
                 'attribute' => 'nome',
                 'value' => function ($data){
                   return Html::a(Html::encode($data->nome), Url::to(['professor/index', 'id' => $data->id]));
                 }
               ],
+
               [
-                'header' => 'Ultima atualização',
-                'attribute' => 'updated_at',
+                'label' => 'Formação',
+
+              ],
+
+              [
+                'label' => 'Última atualização',
 
                 // This function changes the date format 'y-m-d' to 'd/m/y' because in the stored data have both those date formats
                 'value' => function ($data){
@@ -180,6 +193,30 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
     </div>
   </div>
 </section>
+
+<!-- Publicacoes Section -->
+   <section id="publicacoes">
+       <div class="container">
+           <div class="row">
+               <div class="col-md-12 text-center">
+                   <h3>Publicações em Conferências e Periódicos</h3>
+                   <p>Para conferir a lista de artigos de cada ano, clique nas colunas do gráfico.</p>
+                   <hr class="hr-section">
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-12 text-center">
+                   <div id="grafico"></div>
+               </div>
+           </div>
+           <br>
+           <div class="row">
+               <div class="col-md-12 text-right">
+                   <small>Atualizado em <?php echo date('d/m/Y'); ?>.</small>
+               </div>
+           </div>
+       </div>
+   </section>
 
 <!-- Projetos Section -->
 <section class="success" id="projetos">
@@ -220,3 +257,5 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
         </div>
     </div>
 </section>
+
+<?php Pjax::end(); ?>
