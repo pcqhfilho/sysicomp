@@ -2,23 +2,16 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 use yii\widgets\Pjax;
 
 Pjax::begin();
-=======
->>>>>>> 700dfd6... Configurações javascript ok
+
 
 $this->registerJsFile('@web/js/jquery.js');
 $this->registerJsFile('@web/js/bootstrap.min.js');
 
-<<<<<<< HEAD
 
->>>>>>> 84f84e8... Funcionalidade pesquisar Lista de Docentes
-=======
->>>>>>> 700dfd6... Configurações javascript ok
 ?>
 
 <!-- Alunos section -->
