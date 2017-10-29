@@ -170,6 +170,20 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
 
               [
                 'label' => 'Formação',
+                'value' => function ($data){
+
+                  $formacaoArray = explode(";", $data->formacao);
+                  if ($formacaoArray[0] == 3) {
+                    return "Doutorado em " . $formacaoArray[1] . ". " . $formacaoArray[2] . ", " . $formacaoArray[3] . ".";
+                  }
+                  else if ($formacaoArray[0] == 2) {
+                    return "Mestrado em " . $formacaoArray[1] . ". " . $formacaoArray[2] . ", " . $formacaoArray[3] . ".";
+                  }
+                  else if ($formacaoArray[0] == 1) {
+                    return "Graducao em " . $formacaoArray[1] . ". " . $formacaoArray[2] . ", " . $formacaoArray[3] . ".";
+                  }
+                }
+
 
               ],
 
@@ -257,5 +271,100 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
         </div>
     </div>
 </section>
+
+<script src="js/jquery.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<script type="text/javascript">
+        $(function () {
+
+            var seriesData = [];
+            seriesData.push({
+                name: "Conferências",
+                data: <?php
+                echo "[";
+                foreach ($arrayConf as $result) {
+                  echo $result['Count(tipo)'];
+                  echo ", ";
+                }
+                echo "]";
+                ?>,
+                color: '#2c3e50',
+                url: "index.php?r=graficopublicacoes&ano="
+            });
+            seriesData.push({
+                name: "Periódicos",
+                data:
+                <?php
+                echo "[";
+                foreach ($arrayPeriod as $result) {
+                  echo $result['Count(tipo)'];
+                  echo ", ";
+                }
+                echo "]";
+                ?>,
+
+                color: '#18bc9c',
+                url: "index.php?r=graficopublicacoes&ano="
+            });
+             var myChart = Highcharts.chart('grafico', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Histórico de Publicações'
+                },
+                xAxis: {
+                    categories: <?php
+                    echo "[";
+                    foreach ($arrayAnos as $result) {
+                      echo $result['ano'];
+                      echo ", ";
+                    }
+                    echo "]";
+                    ?>
+                    //categories: [26, 22, 31, 28, 47, 51, 44, 47, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+                },
+                yAxis: {
+                    min: 0,
+                    //max: 200,
+                    title: {
+                        text: 'Total de Publicações'
+                    },
+                    stackLabels: {
+                        enabled: true,
+                        style: {
+                            fontWeight: 'bold',
+                            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                        }
+                    }
+                },
+                legend: {
+                    align: 'right',
+                    x: -30,
+                    verticalAlign: 'top',
+                    y: 22,
+                    floating: true,
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                    borderColor: '#CCC',
+                    borderWidth: 1,
+                    shadow: false
+                },
+                plotOptions: {
+                    series: {
+                        cursor: 'pointer',
+                        stacking: 'normal',
+
+                        events: {
+                            click: function (e) {
+                                  window.open(this.options.url + e.point.category, "_self");
+                            }
+                        }
+                    }
+                },
+                series: seriesData
+            });
+        });
+    </script>
 
 <?php Pjax::end(); ?>
