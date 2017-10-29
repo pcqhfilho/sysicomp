@@ -61,7 +61,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
     /**
     * Displays homepage.
     *
@@ -151,6 +150,57 @@ class SiteController extends Controller
         //$professorDataProvider = $modelProfessor->read();
         $professorDataProvider = $searchModelProfessor->searchProfessor(Yii::$app->request->queryParams);
 
+        //publicacoes
+
+        $arrayConf = (new \yii\db\Query())
+        ->select('Count(tipo)')
+        ->from('j17_publicacoes')
+        ->where([
+        'tipo' => 1,
+        ])
+        ->groupBy('ano')
+        ->orderBy('ano ASC')
+        ->all();
+
+        $arrayPeriod = (new \yii\db\Query())
+        ->select('Count(tipo)')
+        ->from('j17_publicacoes')
+        ->where([
+        'tipo' => 2,
+        ])
+        ->groupBy('ano')
+        ->orderBy('ano ASC')
+        ->all();
+
+        $arrayAnos = (new \yii\db\Query())
+        ->select('ano')
+        ->from('j17_publicacoes')
+        ->distinct()
+        ->orderBy('ano ASC')
+        ->all();
+
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("
+        SELECT
+	       result.ano,
+         coalesce(Count(subResult.total), 0)
+        FROM j17_publicacoes as result
+
+        LEFT JOIN (
+	         SELECT
+		         sub.ano,
+		           Count(*) as total
+	         FROM j17_publicacoes as sub
+
+           WHERE sub.tipo = 2
+           GROUP BY sub.ano
+
+           ) as subResult
+        ON subResult.ano = result.ano
+
+        GROUP BY result.ano");
+        $arrayPeriodZero = $command->queryAll();
+
         //PROJETOS
         $modelProjetos = new Projetos();
         $queryProjetos = $modelProjetos->getProjetosAndamento();
@@ -174,6 +224,10 @@ class SiteController extends Controller
         'qtdEgrDoc' => $qtdEgrDoc,
         'qtdProjetos' => $qtdProjetos,
         'queryProjetos' => $queryProjetos,
+        'arrayConf' => $arrayConf,
+        'arrayPeriod' => $arrayPeriod,
+        'arrayAnos' => $arrayAnos,
+        'arrayPeriodZero' => $arrayPeriodZero,
         'professorDataProvider' => $professorDataProvider,
         'searchModelProfessor' => $searchModelProfessor,
         ]);
