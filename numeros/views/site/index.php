@@ -298,7 +298,7 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
                 <?php
                 echo "[";
                 foreach ($arrayPeriod as $result) {
-                  echo $result['Count(tipo)'];
+                  echo $result['coalesce(Count(subResult.total), 0)'];
                   echo ", ";
                 }
                 echo "]";
