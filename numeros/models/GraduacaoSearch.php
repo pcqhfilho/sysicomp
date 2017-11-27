@@ -100,7 +100,7 @@ class GraduacaoSearch extends Graduacao
         }
 
         $query->andFilterWhere(['like', 'NOME_PESSOA', $this->NOME_PESSOA])
-            ->andFilterWhere(['like', 'DT_EVASAO', $this->DT_EVASAO]);
+            ->andFilterWhere(['like', 'PERIODO_EVASAO', $this->PERIODO_EVASAO]);
 
         return $dataProvider;
     }

@@ -3,3 +3,5 @@
 /backend/web/previa
 /backend/web/css/docs.min.css
 /vendor/*
+/commom/config/main-local.php
+/commom/config/params-local.php

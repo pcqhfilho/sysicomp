@@ -28,14 +28,14 @@ $formacao = explode(";", $professor['formacao']);
 <div class="container theme-showcase" role="main">
     <div class="jumbotron">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2" align="center" >
                 <a href="#">
-                    <img class="media-object img-rounded" style="width: 140px; height: 140px;" src=<?= "img/professores/".$email[0].".jpg"?> alt="140x140">
+                    <img class="media-object img-rounded" style="width: 100%; height: 100%;" src=<?= "img/professores/".$email[0].".jpg"?> alt="140x140">
                 </a>
             </div>
             <div class="col-md-5">
-                <h2 class="media-heading"><?= $professor['nome'];?></h2>
-                <p>
+                <h2 class="media-heading" align="center"><?= $professor['nome'];?></h2>
+                <p align="center">
                     <?php
                         if($formacao[0]){ 
                             if ($formacao[0] == 3)
@@ -54,12 +54,12 @@ $formacao = explode(";", $professor['formacao']);
             </div>
             <div class="col-xs-6 col-md-3">
                 <a href="http://icomp.ufam.edu.br">
-                    <img class="img-responsive" style="width: 250px; height: 140px;" src="img/icomp.png" alt="250x140">
+                    <img class="img-responsive" style="width: 100%; height: 140px;" src="img/icomp.png" alt="250x140">
                 </a>
             </div>
             <div class="col-xs-4 col-md-2">
                 <a href="http://www.ufam.edu.br">
-                    <img class="img-responsive" style="width: 120px; height: 140px;" src="img/ufam.png" alt="120x140">
+                    <img class="img-responsive" style="width: 100%; height: 140px;" src="img/ufam.png" alt="120x140">
                 </a>
             </div>
         </div>

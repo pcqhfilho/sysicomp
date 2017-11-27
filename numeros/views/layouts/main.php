@@ -12,6 +12,8 @@ use common\widgets\Alert;
 
 AppAsset::register($this);
 
+$this->registerJsFile('@web/js/freelancer.js');
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -127,12 +129,19 @@ AppAsset::register($this);
         </div>
     </footer>
 
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top page-scroll visible-xs visible-sm">
-        <a class="btn btn-primary" href="#page-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
-    </div>
+     <!-- jQuery -->
+     <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/freelancer.js"></script>
 
 <?php $this->endBody() ?>
 </body>
