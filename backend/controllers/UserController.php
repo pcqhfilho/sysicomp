@@ -147,6 +147,52 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * Uploads Lattes.
+     * @return mixed
+     */
+    public function actionCvsalunos()
+    {
+        $model = new UploadCvsalunosForm();
+        $dir = '';
+
+        if (Yii::$app->request->isPost) {
+            $model->csvAlunosFile = UploadedFile::getInstance($model, 'csvAlunosFile');
+            if($model->upload()){
+              $dir = 'uploads/alunosCsv.csv';
+              $handle = fopen($dir, "r");
+              fgetcsv($handle);
+              fgetcsv($handle);
+              while (($fileop = fgetcsv($handle, 0, ";")) !== false)
+                     {
+                        $id_pessoa = utf8_encode($fileop[0]);
+                        $nome_pessoa = utf8_encode($fileop[1]);
+                        $sexo = utf8_encode($fileop[2]);
+                        $dt_nascimento = utf8_encode($fileop[3]);
+                        $dt_nascimento = substr($dt_nascimento, 0, 10);
+                        $forma_ingresso = utf8_encode($fileop[4]);
+                        $forma_evasao = utf8_encode($fileop[5]);
+                        $cod_curso = utf8_encode($fileop[6]);
+                        $nome_unidade = utf8_encode($fileop[7]);
+                        $matr_aluno = utf8_encode($fileop[8]);
+                        $num_versao = utf8_encode($fileop[9]);
+                        $periodo_ingresso = utf8_encode($fileop[10]);
+                        $dt_evasao = utf8_encode($fileop[11]);
+                        $dt_evasao = substr($dt_evasao, 0, 10);
+                        $periodo_evasao = utf8_encode($fileop[12]);
+
+                        $sql = "INSERT INTO j17_aluno_grad VALUES ('$id_pessoa', '$nome_pessoa', '$sexo', '$dt_nascimento', '$forma_ingresso', '$forma_evasao', '$cod_curso', '$nome_unidade', '$matr_aluno', '$num_versao', '$periodo_ingresso', '$dt_evasao', '$periodo_evasao') ON DUPLICATE KEY UPDATE MATR_ALUNO = MATR_ALUNO";
+                        $query = Yii::$app->db->createCommand($sql)->execute();
+                     }
+
+              $this->mensagens('success', 'Sucesso', 'Upload foi realizado com sucesso.');
+            } else {
+              $this->mensagens('danger', 'ERRO', 'UPLOAD csv nao esta correto.');
+            }
+        }
+		return $this->render('cvsalunos', ['model' => $model]);
+    }
+
 
     /**
      * Uploads Lattes.
@@ -155,18 +201,54 @@ class UserController extends Controller
     public function actionLattes()
     {
         $model = new UploadLattesForm();
+        $idUsuario = Yii::$app->user->identity->id;
+        $dir = '';
 
         if (Yii::$app->request->isPost) {
             $model->lattesFile = UploadedFile::getInstance($model, 'lattesFile');
-            if ($model->upload(Yii::$app->user->identity->id)) {
+            if ($model->upload($idUsuario)) {
                 // file is uploaded successfully
-				$this->mensagens('success', 'Sucesso', 'Upload realizado com sucesso.');
-				return $this->redirect(['lattes']);
+                $dir = 'uploads/lattes-'.$idUsuario.'.xml';
+                $xml = simplexml_load_file($dir);
+                $formacao = '';
+
+                $idLattes = $xml['NUMERO-IDENTIFICADOR'];
+                if(!empty($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'})){
+                  $formacao = "3;" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}['NOME-CURSO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}['NOME-INSTITUICAO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}['ANO-DE-CONCLUSAO'];
+                } else if(!empty($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'})){
+                  $formacao = "2;" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}['NOME-CURSO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}['NOME-INSTITUICAO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}['ANO-DE-CONCLUSAO'];
+                } else {
+                  $formacao = "1;" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}['NOME-CURSO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}['NOME-INSTITUICAO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}['ANO-DE-CONCLUSAO'];
+                }
+
+                $resumo = $xml->{'DADOS-GERAIS'}->{'RESUMO-CV'}['TEXTO-RESUMO-CV-RH'];
+                $data = date('d/m/Y');
+
+                $connection = Yii::$app->getDb();
+                $command = $connection->createCommand("UPDATE j17_user SET idLattes=:column1, formacao=:column2, resumo=:column3, ultimaAtualizacao=:column4 WHERE id=:id")
+                ->bindValue(':column1', $idLattes)
+                ->bindValue(':column2', $formacao)
+                ->bindValue(':column3', $resumo)
+                ->bindValue(':column4', $data)
+                ->bindValue(':id', $idUsuario)
+                ->execute();
+
+                foreach ($xml->{'DADOS-GERAIS'}->{'PREMIOS-TITULOS'} as $premio) {
+          				for ($i=0; $i < count($premio); $i++) {
+          					$titulo = $premio->{'PREMIO-TITULO'}[$i]['NOME-DO-PREMIO-OU-TITULO'];
+          					$entidade = $premio->{'PREMIO-TITULO'}[$i]['NOME-DA-ENTIDADE-PROMOTORA'];
+          					$ano = $premio->{'PREMIO-TITULO'}[$i]['ANO-DA-PREMIACAO'];
+          					$sql = "INSERT INTO j17_premios (idProfessor, titulo, entidade, ano) VALUES ($idUsuario, '$titulo', '$entidade', '$ano') ON DUPLICATE KEY UPDATE id = id";
+                    Yii::$app->db->createCommand($sql)->execute();
+
+                  }
+          			}
+
+                $this->mensagens('success', 'Sucesso', 'Upload foi realizado com sucesso.');
+            } else {
+              $this->mensagens('danger', 'UPLOAD xml nao esta correto.');
             }
         }
-
-		$this->mensagens('success', 'Sucesso', 'Upload vai ser realizado com sucesso.');
-
 		return $this->render('lattes', ['model' => $model]);
     }
 
@@ -191,19 +273,6 @@ class UserController extends Controller
 		return $this->render('cvsdisciplinas', ['model' => $model]);
 		//var_dump($model);
 	}
-
-    public function actionCvsalunos()
-    {
-        $model = new UploadCvsalunosForm();
-
-        if (Yii::$app->request->isPost) {
-            $model->csvAlunosFile = UploadedFile::getInstance($model, 'csvAlunosFile');
-				$this->mensagens('success', 'Sucesso', 'Upload realizado com sucesso.');
-        }
-
-		return $this->render('cvsalunos', ['model' => $model]);
-    }
-
 
 	// Método que atualiza o banco com os formandos do período
     public function actionPit()
