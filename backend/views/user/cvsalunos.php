@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<h3 class="panel-title"><b>CSV da Lista de Alunos</b></h3>
 		</div>
 		<div class="panel-body">
-			<?= $form->field($model, 'csvAlunosFile', ['options' => ['class' => 'col-md-6']])->fileInput(['accept' => '.xml'])->label("<div><b>CSV da Lista de Alunos:</b></div>") ?>
+			<?= $form->field($model, 'csvAlunosFile', ['options' => ['class' => 'col-md-6']])->fileInput(['accept' => '.csv'])->label("<div><b>CSV da Lista de Alunos:</b></div>") ?>
 			<?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
 		</div>
 	</div>
