@@ -6,7 +6,7 @@ use numeros\models\Premios;
 
 class PremiosController extends \yii\web\Controller
 {
-    // This function changes the date format 'y-m-d' to 'd/m/Y' because in the stored data contains both those date formats
+    //muda data de y-m-d para d/m/Y
     public function changeDataFormat($data){
         if($data)
         if($data[2] != '/'){
@@ -36,6 +36,6 @@ class PremiosController extends \yii\web\Controller
             ]);
     }
 
-    
+
 
 }

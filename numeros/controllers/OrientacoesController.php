@@ -7,6 +7,7 @@ use numeros\models\Orientacoes;
 
 class OrientacoesController extends \yii\web\Controller
 {
+    //muda data de y-m-d para d/m/Y
     private function changeDataFormat($data){
         if($data)
         if($data[2] != '/'){

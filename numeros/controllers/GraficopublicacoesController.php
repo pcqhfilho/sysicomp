@@ -6,8 +6,6 @@ use numeros\models\Publicacoes;
 
 class GraficopublicacoesController extends \yii\web\Controller
 {
-    // This function changes the date format 'y-m-d' to 'd/m/Y' because in the stored data contains both those date formats
-
     public function actionIndex($ano)
     {
         $this->layout = '@numeros/views/layouts/main.php';

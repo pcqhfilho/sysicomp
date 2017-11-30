@@ -17,6 +17,17 @@
         <?php
         echo "<ul>";
         foreach ($queryPublicacoesConf as $pub){
+
+          $idProfessor = $pub['idProfessor'];
+          $connection = Yii::$app->getDb();
+          $command = $connection->createCommand("
+            SELECT idLattes, nome, updated_at FROM j17_user
+            WHERE id = '$idProfessor';
+          ");
+          $idLattes = $command->queryOne()['idLattes'];
+          $nome = $command->queryOne()['nome'];
+          $updated_at = $command->queryOne()['updated_at'];
+
           echo "<li class=\"text-justify\"><strong>" . $pub['titulo'] . ". </strong>";
           $aux = explode("; ", str_replace(",", "", rtrim($pub['autores'],"; ")));
 
@@ -31,7 +42,7 @@
             echo $pub['natureza'];
           }
           echo "<br>";
-          echo "Fonte(s): ";
+          echo 'Fonte(s): <small><a href="http://lattes.cnpq.br/' . $idLattes . '" target="blank">[Lattes '. $nome .', '. $updated_at .']</a></small>';
 
           echo "</li><br>";
         }
@@ -49,6 +60,17 @@
         <?php
         echo "<ul>";
         foreach ($queryPublicacoesPeriod as $pub){
+
+          $idProfessor = $pub['idProfessor'];
+          $connection = Yii::$app->getDb();
+          $command = $connection->createCommand("
+            SELECT idLattes, nome, updated_at FROM j17_user
+            WHERE id = '$idProfessor';
+          ");
+          $idLattes = $command->queryOne()['idLattes'];
+          $nome = $command->queryOne()['nome'];
+          $updated_at = $command->queryOne()['updated_at'];
+
           echo "<li class=\"text-justify\"><strong>" . $pub['titulo'] . ". </strong>";
           $aux = explode("; ", str_replace(",", "", rtrim($pub['autores'],"; ")));
 
@@ -59,7 +81,7 @@
 
           echo "<i>" . $pub['local'] . ", " . $pub['ano'] . ". </i>";
           echo "<br>";
-          echo "Fonte(s): ";
+          echo 'Fonte(s): <small><a href="http://lattes.cnpq.br/' . $idLattes . '" target="blank">[Lattes '. $nome .', '. $updated_at .']</a></small>';
 
           echo "</li><br>";
         }
