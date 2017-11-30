@@ -4,13 +4,10 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
-Pjax::begin();
-
+// Pjax::begin();
 
 $this->registerJsFile('@web/js/jquery.js');
 $this->registerJsFile('@web/js/bootstrap.min.js');
-
-
 
 ?>
 
@@ -143,7 +140,6 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
     </div>
   </div>
 </section>
-
 <!-- Docentes section -->
 <section class="success" id="docentes">
   <div class="container">
@@ -153,7 +149,7 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
             <hr class="hr-section">
         </div>
         <?php
-
+          Pjax::begin(); 
           echo GridView::widget([
             'dataProvider' => $professorDataProvider,
             'filterModel' => $searchModelProfessor,
@@ -203,6 +199,7 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
 
             ],
           ]);
+          Pjax::end(); 
         ?>
     </div>
   </div>
@@ -367,4 +364,4 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
         });
     </script>
 
-<?php Pjax::end(); ?>
+<?php  ?>

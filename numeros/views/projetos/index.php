@@ -95,19 +95,32 @@ $this->params['breadcrumbs'] = array ('professor' => $professor, 'updatedAt' => 
                     
                     for ($i=date("Y")-9; $i <= date("Y"); $i++)
                         $contaProjeto[$i] = 0; 
-                    foreach ($queryProjetosPorAno as $projeto)
-                        if($projeto['fim'] == 0)
-                            $contaProjeto[date("Y")]++;
-                        else if($projeto['fim'] <= date("Y")-9)
-                            $contaProjeto[date("Y")-9]++;
-                        else
-                            $contaProjeto[$projeto['fim']]++;
-                    
-                    $str = "['Até " . (date("Y")-8) . "', " . $contaProjeto[date("Y")-9] . ", 'color: #009688'], ";
-                    for ($i=date("Y")-8; $i < date("Y"); $i++){ 
+
+                    foreach ($queryProjetosPorAno as $projeto) {
+                        foreach ($projeto as $inicio => $fim) {
+                            if ($inicio < date("Y")-9)
+                                $inicio = date("Y")-9;
+        
+                            if ($fim == 0) {
+                                for ($i=$inicio; $i <= date("Y") ; $i++) { 
+                                    $contaProjeto[$i]++;
+                                }
+                            }
+                            else{
+                                for ($i=$inicio; $i <= $fim ; $i++) { 
+                                    $contaProjeto[$i]++;
+                                }
+                            }
+                        }
+                    }
+        
+                    $str = "";
+                    for ($i=date("Y")-9; $i < date("Y"); $i++) { 
                         $str .= "['" . $i . "', " . $contaProjeto[$i] . ", 'color: #009688'], "; 
                     }
-                    $str .= "['" . date("Y") . "', " . $contaProjeto[date("Y")] . ", 'color: #009688']";    
+        
+                    $str .= "['" . date("Y") . "', " . $contaProjeto[date("Y")] . ", 'color: #009688']"; 
+                    
                     echo $str;
                 }
             ?>

@@ -1,2 +1,4 @@
 /vendor/
 /vendor/*
+/commom/config/main-local.php
+/commom/config/params-local.php
