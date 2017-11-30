@@ -69,7 +69,7 @@ AppAsset::register($this);
             <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Início</a></li>
-                    <li id="li-index"><?=Html::a('Descrição', Url::to(['professor/index', 'id' => $professor['id']]));?>
+                    <li id="li-index"><?=Html::a($professor['nome'], Url::to(['professor/index', 'id' => $professor['id']]));?>
                     <li id="li-publicacoes"><?=Html::a('Publicações', Url::to(['publicacoes/index', 'id' => $professor['id']]));?></li>
                     <li id="li-projetos"><?=Html::a('Projetos de pesquisa', Url::to(['projetos/index', 'id' => $professor['id']]));?></li>
                     <li id="li-orientacoes" class="dropdown">

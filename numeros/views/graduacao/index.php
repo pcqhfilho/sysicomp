@@ -10,6 +10,8 @@ use yii\widgets\Pjax;
 
 Pjax::begin();
 
+// $.pjax.defaults.scrollTo = false;
+
 $this->title = ' ALUNOS FORMADOS';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
