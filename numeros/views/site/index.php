@@ -149,7 +149,7 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
             <hr class="hr-section">
         </div>
         <?php
-          Pjax::begin(); 
+          Pjax::begin();
           echo GridView::widget([
             'dataProvider' => $professorDataProvider,
             'filterModel' => $searchModelProfessor,
@@ -199,7 +199,7 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
 
             ],
           ]);
-          Pjax::end(); 
+          Pjax::end();
         ?>
     </div>
   </div>
@@ -244,6 +244,17 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
           <?php
               $i = 1;
               foreach ($queryProjetos as $projeto){
+
+                $idProfessor = $projeto['idProfessor'];
+                $connection = Yii::$app->getDb();
+                $command = $connection->createCommand("
+                  SELECT idLattes, nome, updated_at FROM j17_user
+                  WHERE id = '$idProfessor';
+                ");
+                $idLattes = $command->queryOne()['idLattes'];
+                $nome = $command->queryOne()['nome'];
+                $updated_at = $command->queryOne()['updated_at'];
+
                     echo '
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingOne">
@@ -259,11 +270,15 @@ $this->registerJsFile('@web/js/bootstrap.min.js');
                             <p><strong>Período: </strong>'. $projeto['inicio'] . ' - Atual</p>
                             <p><strong>Integrantes: </strong>'. $projeto['integrantes'] . '</p>
                             <p><strong>Financiadores: </strong>'. $projeto['financiadores'] . '</p>
+                            <br><small>Fonte(s): <a href="http://lattes.cnpq.br/'. $idLattes .'" target="blank">[Lattes '. $nome .', '. $updated_at .']</a></small>
                           </div>
                         </div>
                       </div>';
                   $i++;
                 }
+
+                // <a href="http://lattes.cnpq.br/'.$proveniencia->getIdLattes().'" target="blank">[Lattes '.ucfirst($proveniencia->getAlias()).', '.$proveniencia->getUltimaAtualizacao().']</a>'
+
           ?>
         </div>
     </div>

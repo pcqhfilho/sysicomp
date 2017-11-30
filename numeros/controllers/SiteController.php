@@ -70,6 +70,10 @@ class SiteController extends Controller
   {
 
     //ALUNO_GRAD
+
+    /**
+    * retorna a qtd de alunos matriculados no curso de ciencia da computacao
+    */
     $qtdMatCc = (new \yii\db\Query())
     ->from('j17_aluno_grad')
     ->where([
@@ -78,6 +82,9 @@ class SiteController extends Controller
     ])
     ->count();
 
+    /**
+    * retorna a qtd de alunos matriculados no curso de sistemas de informacao
+    */
     $qtdMatSi = (new \yii\db\Query())
     ->from('j17_aluno_grad')
     ->where([
@@ -86,6 +93,9 @@ class SiteController extends Controller
     ])
     ->count();
 
+    /**
+    * retorna a qtd de alunos formados no curso de processamento de dados
+    */
     $qtdEgrPd = (new \yii\db\Query())
     ->from('j17_aluno_grad')
     ->where([
@@ -94,6 +104,9 @@ class SiteController extends Controller
     ])
     ->count();
 
+    /**
+    * retorna a qtd de alunos formados no curso de ciencia da computacao
+    */
     $qtdEgrCc = (new \yii\db\Query())
     ->from('j17_aluno_grad')
     ->where([
@@ -102,6 +115,9 @@ class SiteController extends Controller
     ])
     ->count();
 
+    /**
+    * retorna a qtd de alunos formados no curso de sistemas de informacao
+    */
     $qtdEgrSi = (new \yii\db\Query())
     ->from('j17_aluno_grad')
     ->where([
@@ -112,6 +128,9 @@ class SiteController extends Controller
 
     //ALUNO_PPGI
 
+    /**
+    * retorna a qtd de alunos matriculados em mestrado
+    */
     $qtdMatMest = (new \yii\db\Query())
     ->from('j17_aluno')
     ->where([
@@ -120,6 +139,9 @@ class SiteController extends Controller
     ])
     ->count();
 
+    /**
+    * retorna a qtd de alunos matriculados em doutorado
+    */
     $qtdMatDoc = (new \yii\db\Query())
     ->from('j17_aluno')
     ->where([
@@ -128,6 +150,9 @@ class SiteController extends Controller
     ])
     ->count();
 
+    /**
+    * retorna a qtd de alunos formados com mestrado
+    */
     $qtdEgrMest = (new \yii\db\Query())
     ->from('j17_aluno')
     ->where([
@@ -136,6 +161,9 @@ class SiteController extends Controller
     ])
     ->count();
 
+    /**
+    * retorna a qtd de alunos formados com doutorado
+    */
     $qtdEgrDoc = (new \yii\db\Query())
     ->from('j17_aluno')
     ->where([
@@ -180,7 +208,7 @@ class SiteController extends Controller
     * retorna um array contendo a quantidade de
     * publicacoes em periodicos em seus respectivos anos
     */
-    
+
     $connection = Yii::$app->getDb();
     $command = $connection->createCommand("
     SELECT

@@ -196,7 +196,7 @@ section.success a:focus,
 section.success a:active,
 section.success a.active {
     outline: 0;
-    color: #fff;
+    /*color: #fff;*/
 }
 
 @media(max-width:767px) {
@@ -464,12 +464,12 @@ footer .footer-below {
     opacity: 0;
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
    background-color: #ECF0EE;
  }
 
-.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>td,
 .table-striped>tbody>tr:nth-child(even)>th {
    background-color: #ffffff;
  }

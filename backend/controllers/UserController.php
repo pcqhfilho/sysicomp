@@ -149,8 +149,7 @@ public function actionDelete($id)
 }
 
 /**
-* Uploads Lattes.
-* @return mixed
+* faz o upload do csv contendo os alunos 
 */
 public function actionCvsalunos()
 {
@@ -196,8 +195,7 @@ public function actionCvsalunos()
 
 
 /**
-* Uploads Lattes.
-* @return mixed
+* faz o upload do xml contendo o curriculo lattes
 */
 public function actionLattes()
 {
@@ -208,7 +206,7 @@ public function actionLattes()
   if (Yii::$app->request->isPost) {
     $model->lattesFile = UploadedFile::getInstance($model, 'lattesFile');
     if ($model->upload($idUsuario)) {
-      //try {
+      try {
         // file is uploaded successfully
         $dir = 'uploads/lattes-'.$idUsuario.'.xml';
         $xml = simplexml_load_file($dir);
@@ -511,9 +509,9 @@ public function actionLattes()
     		}
         unlink($dir);
         $this->mensagens('success', 'Sucesso', 'Upload foi realizado com sucesso. ');
-      //} catch (\Exception $e) {
-      //   $this->mensagens('danger', 'ERRO', 'Algum erro ocorreu.');
-    //  }
+      } catch (\Exception $e) {
+         $this->mensagens('danger', 'ERRO', 'Algum erro ocorreu.');
+      }
     } else {
       $this->mensagens('danger', 'ERRO', 'Algum erro ocorreu.');
     }
