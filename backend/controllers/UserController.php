@@ -185,7 +185,7 @@ public function actionCvsalunos()
         $sql = "INSERT INTO j17_aluno_grad VALUES ('$id_pessoa', '$nome_pessoa', '$sexo', '$dt_nascimento', '$forma_ingresso', '$forma_evasao', '$cod_curso', '$nome_unidade', '$matr_aluno', '$num_versao', '$periodo_ingresso', '$dt_evasao', '$periodo_evasao') ON DUPLICATE KEY UPDATE MATR_ALUNO = MATR_ALUNO";
         $query = Yii::$app->db->createCommand($sql)->execute();
       }
-
+      unlink($dir);
       $this->mensagens('success', 'Sucesso', 'Upload foi realizado com sucesso.');
     } else {
       $this->mensagens('danger', 'ERRO', 'UPLOAD csv nao esta correto.');
@@ -215,28 +215,31 @@ public function actionLattes()
         $formacao = '';
 
         $idLattes = $xml['NUMERO-IDENTIFICADOR'];
-        if(!empty($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'})){
+        if(!empty($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}) || ($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}) != null){
           $formacao = "3;" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}['NOME-CURSO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}['NOME-INSTITUICAO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'DOUTORADO'}['ANO-DE-CONCLUSAO'];
-        } else if(!empty($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'})){
+        } else if(!empty($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}) || ($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}) != null){
           $formacao = "2;" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}['NOME-CURSO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}['NOME-INSTITUICAO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'MESTRADO'}['ANO-DE-CONCLUSAO'];
-        } else {
+        } else if(!empty($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}) || ($xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}) != null){
           $formacao = "1;" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}['NOME-CURSO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}['NOME-INSTITUICAO'] . ";" . $xml->{'DADOS-GERAIS'}->{'FORMACAO-ACADEMICA-TITULACAO'}->{'GRADUACAO'}['ANO-DE-CONCLUSAO'];
         }
 
         $formacao = str_replace("'","",$formacao);
-
         $resumo = $xml->{'DADOS-GERAIS'}->{'RESUMO-CV'}['TEXTO-RESUMO-CV-RH'];
-        $data = date('d/m/Y');
+
+        $data = $xml['DATA-ATUALIZACAO'];
+        $data = \DateTime::createFromFormat('dmY', $data);
+        $data = $data->format('d/m/Y');
 
         $resumo = str_replace("'","",$resumo);
 
         //popula j17_user
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("UPDATE j17_user SET idLattes=:column1, formacao=:column2, resumo=:column3, ultimaAtualizacao=:column4 WHERE id=:id")
+        $command = $connection->createCommand("UPDATE j17_user SET idLattes=:column1, formacao=:column2, resumo=:column3, updated_at=:column4, ultimaAtualizacao=:column5 WHERE id=:id")
         ->bindValue(':column1', $idLattes)
         ->bindValue(':column2', $formacao)
         ->bindValue(':column3', $resumo)
         ->bindValue(':column4', $data)
+        ->bindValue(':column5', date("d/m/Y"))
         ->bindValue(':id', $idUsuario)
         ->execute();
 
@@ -419,8 +422,10 @@ public function actionLattes()
     		foreach ($xml->{'DADOS-COMPLEMENTARES'}->{'ORIENTACOES-EM-ANDAMENTO'} as $orientacao) {
     			for ($i=0; $i < count($orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}); $i++) {
     				$titulo = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}[$i]->{'DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}['TITULO-DO-TRABALHO'];
-    				$aluno = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}[$i]->{'DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}['NOME-DO-ORIENTANDO'];
-    				$ano = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}[$i]->{'DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}['ANO'];
+            $titulo = str_replace("'","",$titulo);
+            $aluno = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}[$i]->{'DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}['NOME-DO-ORIENTANDO'];
+            $aluno = str_replace("'","",$aluno);
+            $ano = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}[$i]->{'DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO'}['ANO'];
     				$tipo = 2;
     				$status = 1;
 
@@ -436,8 +441,10 @@ public function actionLattes()
     		foreach ($xml->{'DADOS-COMPLEMENTARES'}->{'ORIENTACOES-EM-ANDAMENTO'} as $orientacao) {
     			for ($i=0; $i < count($orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}); $i++) {
     				$titulo = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}[$i]->{'DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}['TITULO-DO-TRABALHO'];
-    				$aluno = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}[$i]->{'DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}['NOME-DO-ORIENTANDO'];
-    				$ano = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}[$i]->{'DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}['ANO'];
+            $titulo = str_replace("'","",$titulo);
+            $aluno = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}[$i]->{'DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}['NOME-DO-ORIENTANDO'];
+            $aluno = str_replace("'","",$aluno);
+            $ano = $orientacao->{'ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}[$i]->{'DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO'}['ANO'];
     				$tipo = 3;
     				$status = 1;
     				$sql = "INSERT INTO j17_orientacoes (idProfessor, titulo, aluno, ano, tipo, status) VALUES ($idUsuario, '$titulo', '$aluno', '$ano', $tipo, $status)";
@@ -452,10 +459,13 @@ public function actionLattes()
     		foreach ($xml->{'OUTRA-PRODUCAO'}->{'ORIENTACOES-CONCLUIDAS'} as $orientacao) {
     			for ($i=0; $i < count($orientacao->{'OUTRAS-ORIENTACOES-CONCLUIDAS'}); $i++) {
     				$titulo = $orientacao->{'OUTRAS-ORIENTACOES-CONCLUIDAS'}[$i]->{'DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS'}['TITULO'];
-    				$aluno = $orientacao->{'OUTRAS-ORIENTACOES-CONCLUIDAS'}[$i]->{'DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS'}['NOME-DO-ORIENTADO'];
-    				$ano = $orientacao->{'OUTRAS-ORIENTACOES-CONCLUIDAS'}[$i]->{'DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS'}['ANO'];
+            $titulo = str_replace("'","",$titulo);
+            $aluno = $orientacao->{'OUTRAS-ORIENTACOES-CONCLUIDAS'}[$i]->{'DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS'}['NOME-DO-ORIENTADO'];
+            $aluno = str_replace("'","",$aluno);
+            $ano = $orientacao->{'OUTRAS-ORIENTACOES-CONCLUIDAS'}[$i]->{'DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS'}['ANO'];
     				$natureza = ucwords(strtolower(str_replace("_", " ", $orientacao->{'OUTRAS-ORIENTACOES-CONCLUIDAS'}[$i]->{'DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS'}['NATUREZA'])));
-    				$tipo = 1;
+            $natureza = str_replace("'","",$natureza);
+            $tipo = 1;
     				$status = 2;
     				$sql = "INSERT INTO j17_orientacoes (idProfessor, titulo, aluno, ano, natureza, tipo, status) VALUES ($idUsuario, '$titulo', '$aluno', '$ano', '$natureza', $tipo, $status)";
     				Yii::$app->db->createCommand($sql)->execute();
@@ -469,8 +479,10 @@ public function actionLattes()
     		foreach ($xml->{'OUTRA-PRODUCAO'}->{'ORIENTACOES-CONCLUIDAS'} as $orientacao) {
     			for ($i=0; $i < count($orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}); $i++) {
     				$titulo = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}[$i]->{'DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}['TITULO'];
-    				$aluno = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}[$i]->{'DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}['NOME-DO-ORIENTADO'];
-    				$ano = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}[$i]->{'DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}['ANO'];
+            $titulo = str_replace("'","",$titulo);
+            $aluno = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}[$i]->{'DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}['NOME-DO-ORIENTADO'];
+            $aluno = str_replace("'","",$aluno);
+            $ano = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}[$i]->{'DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO'}['ANO'];
     				$tipo = 2;
     				$status = 2;
 
@@ -486,8 +498,10 @@ public function actionLattes()
     		foreach ($xml->{'OUTRA-PRODUCAO'}->{'ORIENTACOES-CONCLUIDAS'} as $orientacao) {
     			for ($i=0; $i < count($orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}); $i++) {
     				$titulo = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}[$i]->{'DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}['TITULO'];
-    				$aluno = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}[$i]->{'DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}['NOME-DO-ORIENTADO'];
-    				$ano = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}[$i]->{'DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}['ANO'];
+            $titulo = str_replace("'","",$titulo);
+            $aluno = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}[$i]->{'DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}['NOME-DO-ORIENTADO'];
+            $aluno = str_replace("'","",$aluno);
+            $ano = $orientacao->{'ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}[$i]->{'DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO'}['ANO'];
     				$tipo = 3;
     				$status = 2;
 
@@ -495,10 +509,11 @@ public function actionLattes()
     				Yii::$app->db->createCommand($sql)->execute();
     			}
     		}
+        unlink($dir);
         $this->mensagens('success', 'Sucesso', 'Upload foi realizado com sucesso. ');
       //} catch (\Exception $e) {
-      //    $this->mensagens('danger', 'ERRO', 'Algum erro ocorreu.');
-      //}
+      //   $this->mensagens('danger', 'ERRO', 'Algum erro ocorreu.');
+    //  }
     } else {
       $this->mensagens('danger', 'ERRO', 'Algum erro ocorreu.');
     }
